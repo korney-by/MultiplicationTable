@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Таблица умножения</string>
+    <string name="button_study">Учиться</string>
+    <string name="button_check">Хочу проверить знания</string>
+    <string name="button_progress">Мои достижения</string>
+    <string name="button_settings">Настройки</string>
+    <string name="learning_multiplication">Учим умножение</string>
+    <string name="button_by_2">на 2</string>
+    <string name="button_by_3">на 3</string>
+    <string name="button_by_4">на 4</string>
+    <string name="button_by_5">на 5</string>
+    <string name="button_by_6">на 6</string>
+    <string name="button_by_7">на 7</string>
+    <string name="button_by_8">на 8</string>
+    <string name="button_by_9">на 9</string>
+    <string name="button_by_random">вперемешку</string>
+    <string name="repeat_aloud">Повторяй вслух</string>
+</resources>

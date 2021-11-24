@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <TextView
+            android:id="@+id/text_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:text="@string/learning_multiplication" />
+
+        <Button
+            android:id="@+id/button_by_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_2" />
+
+        <Button
+            android:id="@+id/button_by_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_3" />
+
+        <Button
+            android:id="@+id/button_by_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_4" />
+
+        <Button
+            android:id="@+id/button_by_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_5" />
+
+        <Button
+            android:id="@+id/button_by_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_6" />
+
+        <Button
+            android:id="@+id/button_by_7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_7" />
+
+        <Button
+            android:id="@+id/button_by_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_8" />
+
+        <Button
+            android:id="@+id/button_by_9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_9" />
+
+        <Button
+            android:id="@+id/button_by_random"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_by_random" />
+
+        <Button
+            android:id="@+id/button_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_check" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
