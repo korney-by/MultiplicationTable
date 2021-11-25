@@ -29,17 +29,38 @@
             android:id="@+id/action_selectFragment_self"
             app:destination="@id/selectFragment" />
         <argument
+            android:name="isStudy"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
             android:name="titleFragment"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/studyFragment"
         android:name="com.korneysoft.multiplicationtable.StudyFragment"
-        android:label="fragment_study"
-        tools:layout="@layout/fragment_study" />
+        android:label="@string/learning"
+        tools:layout="@layout/fragment_study" >
+        <argument
+            android:name="study_by_number"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="subTitleFragment"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/testFragment"
         android:name="com.korneysoft.multiplicationtable.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        android:label="@string/сheck"
+        tools:layout="@layout/fragment_test" >
+        <argument
+            android:name="test_by_number"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="subTitleFragment"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

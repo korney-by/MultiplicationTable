@@ -77,11 +77,11 @@
             android:text="@string/button_by_9" />
 
         <Button
-            android:id="@+id/button_by_random"
+            android:id="@+id/button_by_whole_table"
             android:layout_width="match_parent"
             android:tag="0"
             android:layout_height="wrap_content"
-            android:text="@string/button_by_random" />
+            android:text="@string/whole_table" />
 
         <Button
             android:id="@+id/button_check"

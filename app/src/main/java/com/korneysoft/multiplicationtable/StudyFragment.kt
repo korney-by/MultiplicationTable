@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
 
 class StudyFragment : Fragment(R.layout.fragment_study) {
 
     private lateinit var binding: FragmentStudyBinding
+    private val args: StudyFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -18,10 +20,7 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
             findNavController().popBackStack()
         }
 
-    }
-
-    companion object {
-        const val ARG_STUDY_BY_NUMBER = "study_by_number"
+        binding.textAction.text = args.subTitleFragment
     }
 
 }

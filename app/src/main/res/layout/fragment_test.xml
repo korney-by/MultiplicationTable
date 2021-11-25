@@ -7,6 +7,14 @@
     tools:context=".TestFragment">
 
     <TextView
+        android:id="@+id/text_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/repeat_aloud"
+        android:textAlignment="center"
+        android:textSize="24dp" />
+
+    <TextView
         android:id="@+id/text_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +23,7 @@
         app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/text_action" />
 
     <com.korneysoft.multiplicationtable.customview.Timer
         android:id="@+id/custom_view_pomodoro_unit"
@@ -38,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/text_action" />
 
     <Button
         android:id="@+id/button"

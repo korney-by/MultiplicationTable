@@ -5,7 +5,7 @@
     <string name="button_check">Хочу проверить знания</string>
     <string name="button_progress">Мои достижения</string>
     <string name="button_settings">Настройки</string>
-    <string name="learning_multiplication">Учим</string>
+    <string name="learning">Учим</string>
     <string name="button_by_2">на 2</string>
     <string name="button_by_3">на 3</string>
     <string name="button_by_4">на 4</string>
@@ -16,6 +16,8 @@
     <string name="button_by_9">на 9</string>
     <string name="button_by_random">вперемешку</string>
     <string name="repeat_aloud">Повторяй вслух</string>
-    <string name="knowledge_сheck">Провеяем</string>
+    <string name="сheck">Провеяем</string>
     <string name="multiplication">Умножение</string>
+    <string name="multiplication_by">умножение на  %1$d</string>
+    <string name="whole_table">вся таблица</string>
 </resources>
