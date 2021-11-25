@@ -28,9 +28,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
-    private fun openSelect(isStudyMode:Boolean) {
-        findNavController().navigate(R.id.action_homeFragment_to_selectFragment,
-            bundleOf(SelectFragment.ARG_MODE_ISSTUDY to isStudyMode)
+    private fun openSelect(isStudyMode: Boolean) {
+        val titleSelectFragment = getString(
+            if (isStudyMode) R.string.learning_multiplication else R.string.knowledge_сheck
+        )
+
+        findNavController().navigate(
+            R.id.action_homeFragment_to_selectFragment,
+            bundleOf(
+                SelectFragment.ARG_MODE_IS_STUDY to isStudyMode,
+                SelectFragment.ARG_MODE_TITLE to titleSelectFragment
+            )
         )
     }
 }
