@@ -1,10 +1,14 @@
 package com.korneysoft.multiplicationtable
 
+import android.content.res.AssetFileDescriptor
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -21,10 +25,29 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.buttonCheck.setOnClickListener {
             openSelect(false)
         }
-        binding.buttonProgress.setOnClickListener { }
+        binding.buttonProgress.setOnClickListener {
+
+            playAssetSound("Irina/2x2=")
+
+        }
         binding.buttonSettings.setOnClickListener { }
+    }
 
+    private fun playAssetSound(assetName: String) {
 
+        val afd: AssetFileDescriptor? =
+            context?.applicationContext?.assets?.openFd("sounds/$assetName.mp3")
+        afd?.let {
+            try {
+                val mMediaPlayer = MediaPlayer()
+                mMediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+                afd.close()
+                mMediaPlayer.prepare()
+                mMediaPlayer.start()
+            } catch (ex: Exception) {
+                Toast.makeText(context?.applicationContext, ex.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun openSelect(isStudyMode: Boolean) {
