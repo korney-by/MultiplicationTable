@@ -1,16 +1,21 @@
 package com.korneysoft.multiplicationtable
 
-import android.content.res.AssetFileDescriptor
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
+import com.korneysoft.multiplicationtable.data.SoundRepository
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
+import com.korneysoft.multiplicationtable.player.Speaker
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
+
+    val repo by lazy { getRepository() }
+    private fun getRepository(): SoundRepository? {
+        return (activity as MainActivity).repo
+    }
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -26,29 +31,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             openSelect(false)
         }
         binding.buttonProgress.setOnClickListener {
-
-            playAssetSound("Irina/2x2=")
-
-        }
-        binding.buttonSettings.setOnClickListener { }
-    }
-
-    private fun playAssetSound(assetName: String) {
-
-        val afd: AssetFileDescriptor? =
-            context?.applicationContext?.assets?.openFd("sounds/$assetName.mp3")
-        afd?.let {
-            try {
-                val mMediaPlayer = MediaPlayer()
-                mMediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-                afd.close()
-                mMediaPlayer.prepare()
-                mMediaPlayer.start()
-            } catch (ex: Exception) {
-                Toast.makeText(context?.applicationContext, ex.message, Toast.LENGTH_LONG).show()
+            context?.let {
+                val repo = SoundRepository(it.applicationContext)
+                repo.setCurrentVoice("irina")
+                Speaker.apply {
+                    repo.getFileDescriptor(7, 5, true)?.use {
+                        play(it)
+                    }
+                }
             }
+
         }
+        binding.buttonSettings.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
+        }
+        applyPreferences()
     }
+
 
     private fun openSelect(isStudyMode: Boolean) {
         val titleSelectFragment = getString(
@@ -59,6 +58,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             titleSelectFragment
         )
         findNavController().navigate(direction)
+    }
 
+    private fun applyPreferences() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        repo?.let { repo ->
+            val currVoice = prefs.getString(getString(R.string.key_voice), repo.voices[0])
+            if (currVoice != null) {
+                repo.setCurrentVoice(currVoice)
+            }
+        }
     }
 }

@@ -20,4 +20,9 @@
     <string name="multiplication">Умножение</string>
     <string name="multiplication_by">умножение на  %1$d</string>
     <string name="whole_table">вся таблица</string>
+    <string name="irina">Ирина (рус)</string>
+    <string name="robot_maxim">Робот Максим (рус)</string>
+    <string name="pronunciation_header">Произношение</string>
+    <string name="voice_title">Голос</string>
+    <string name="speaking_speed">Скорость речи</string>
 </resources>

@@ -17,6 +17,7 @@ class TestFragment:Fragment(R.layout.fragment_test) {
         binding= FragmentTestBinding.bind(view)
 
         binding.textAction.text = args.subTitleFragment
+        binding.customViewPomodoroUnit
 
     }
 }

@@ -19,4 +19,11 @@
     <string name="multiplication">Multiplication</string>
     <string name="multiplication_by">multiplication by  %1$d</string>
     <string name="whole_table">whole table</string>
+    <string name="irina">Irina (ru)</string>
+    <string name="robot_maxim">Robot Maxim (ru)</string>
+    <string name="pronunciation_header">Pronunciation</string>
+    <string name="voice_title">Voice</string>
+    <string name="speaking_speed">speaking speed</string>
+    <string name="key_voice" translatable="false">voice</string>
+
 </resources>
