@@ -7,13 +7,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.korneysoft.multiplicationtable.data.SoundRepository
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
-import com.korneysoft.multiplicationtable.player.Speaker
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    val repo by lazy { getRepository() }
-    private fun getRepository(): SoundRepository? {
+    val repo by lazy { getSoundRepository() }
+    private fun getSoundRepository(): SoundRepository? {
         return (activity as MainActivity).repo
     }
 
@@ -31,15 +30,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             openSelect(false)
         }
         binding.buttonProgress.setOnClickListener {
-            context?.let {
-                val repo = SoundRepository(it.applicationContext)
-                repo.setCurrentVoice("irina")
-                Speaker.apply {
-                    repo.getFileDescriptor(7, 5, true)?.use {
-                        play(it)
-                    }
-                }
-            }
 
         }
         binding.buttonSettings.setOnClickListener {

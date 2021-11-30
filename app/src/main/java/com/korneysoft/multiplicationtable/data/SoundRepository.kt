@@ -19,12 +19,8 @@ class SoundRepository(val context: Context) {
         return fileList?.toList() ?: listOf()
     }
 
-    fun getFileDescriptor(
-        multiplier1: Int,
-        multiplier2: Int,
-        isHasResult: Boolean = false
-    ): AssetFileDescriptor? {
-        val fileName = getSoundFileName(multiplier1, multiplier2, isHasResult)
+    fun getFileDescriptor(taskId: String): AssetFileDescriptor? {
+        val fileName = getSoundFileName(taskId)
         if (fileName == NONE) return null
 
         return try {
@@ -50,20 +46,16 @@ class SoundRepository(val context: Context) {
         }
     }
 
-    private fun getSoundFileName(
-        multiplier1: Int,
-        multiplier2: Int,
-        isHasResult: Boolean = false
-    ): String {
+    private fun getSoundFileName(taskId: String): String {
         if (currentVoiceFolder == NONE) {
             return NONE
         }
-        val fileName = SoundFileName.make(multiplier1, multiplier2, isHasResult)
-        return "$currentVoiceFolder/$fileName"
+        return "$currentVoiceFolder/${taskId+SOUND_FILE_TYPE}"
     }
 
     companion object {
         private const val SOUNDS_FOLDER = "sounds"
+        private const val SOUND_FILE_TYPE = ".mp3"
         const val NONE = ""
     }
 }
