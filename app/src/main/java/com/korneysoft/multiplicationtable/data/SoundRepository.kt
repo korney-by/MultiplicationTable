@@ -11,7 +11,7 @@ class SoundRepository(val context: Context) {
 
     init {
         voices = readVoices()
-        setCurrentVoice(0)
+        setCurrentVoice(voices[0])
     }
 
     private fun readVoices(): List<String> {
@@ -30,19 +30,11 @@ class SoundRepository(val context: Context) {
         }
     }
 
-    fun setCurrentVoice(index: Int) {
-        if (index < voices.size) {
-            currentVoiceFolder = voices[index]
-        } else {
-            currentVoiceFolder = NONE
-        }
-    }
-
     fun setCurrentVoice(folderName: String) {
-        if (voices.contains(folderName)) {
-            currentVoiceFolder = folderName
+        currentVoiceFolder = if (voices.contains(folderName)) {
+            folderName
         } else {
-            currentVoiceFolder = NONE
+            NONE
         }
     }
 
@@ -50,7 +42,7 @@ class SoundRepository(val context: Context) {
         if (currentVoiceFolder == NONE) {
             return NONE
         }
-        return "$currentVoiceFolder/${taskId+SOUND_FILE_TYPE}"
+        return "$currentVoiceFolder/${taskId + SOUND_FILE_TYPE}"
     }
 
     companion object {
