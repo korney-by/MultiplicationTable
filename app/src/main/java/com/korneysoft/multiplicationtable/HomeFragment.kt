@@ -5,14 +5,13 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import com.korneysoft.multiplicationtable.data.SoundRepository
+import com.korneysoft.multiplicationtable.data.SoundRepositoryAssets
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
-
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     val repo by lazy { getSoundRepository() }
-    private fun getSoundRepository(): SoundRepository? {
+    private fun getSoundRepository(): SoundRepositoryAssets? {
         return (activity as MainActivity).repo
     }
 
@@ -30,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             openSelect(false)
         }
         binding.buttonProgress.setOnClickListener {
-
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToStatisticFragment())
         }
         binding.buttonSettings.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())

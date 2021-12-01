@@ -1,18 +1,16 @@
 package com.korneysoft.multiplicationtable
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.preference.ListPreference
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
-import com.korneysoft.multiplicationtable.data.SoundRepository
+import com.korneysoft.multiplicationtable.data.SoundRepositoryAssets
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     val repo by lazy { getRepository() }
-    private fun getRepository(): SoundRepository? {
+    private fun getRepository(): SoundRepositoryAssets? {
         return (activity as MainActivity).repo
     }
 

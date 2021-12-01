@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StudyFragment : Fragment(R.layout.fragment_study) {
 
     private lateinit var binding: FragmentStudyBinding

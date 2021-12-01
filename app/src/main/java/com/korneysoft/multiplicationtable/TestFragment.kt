@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
 import com.korneysoft.multiplicationtable.databinding.FragmentTestBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TestFragment:Fragment(R.layout.fragment_test) {
 
     private lateinit var binding: FragmentTestBinding
