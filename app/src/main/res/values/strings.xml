@@ -25,5 +25,6 @@
     <string name="voice_title">Voice</string>
     <string name="speaking_speed">speaking speed</string>
     <string name="key_voice" translatable="false">voice</string>
+    <string name="start">Start</string>
 
 </resources>

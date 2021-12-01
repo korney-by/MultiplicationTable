@@ -1,6 +1,6 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".SettingsFragment">
+    tools:context=".fragments.SettingsFragment">
 
     <PreferenceCategory app:title="@string/pronunciation_header">
 

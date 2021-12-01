@@ -5,16 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.korneysoft.multiplicationtable.data.SoundRepositoryAssets
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    val repo by lazy { getRepository() }
-    private fun getRepository(): SoundRepositoryAssets? {
-        return SoundRepositoryAssets(this)
-    }
 
     private val navController: NavController by lazy {
         val navHost =

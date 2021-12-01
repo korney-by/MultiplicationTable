@@ -1,4 +1,4 @@
-package com.korneysoft.multiplicationtable.entities
+package com.korneysoft.multiplicationtable.domain.entities
 
 data class Task(
     val parapeter1: Int,

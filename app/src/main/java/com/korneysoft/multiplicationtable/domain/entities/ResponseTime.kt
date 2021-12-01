@@ -1,4 +1,4 @@
-package com.korneysoft.multiplicationtable.entities
+package com.korneysoft.multiplicationtable.domain.entities
 
 object ResponseTime {
     // time for response in seconds

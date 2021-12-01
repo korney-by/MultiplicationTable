@@ -1,19 +1,20 @@
-package com.korneysoft.multiplicationtable
+package com.korneysoft.multiplicationtable.fragments
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
-import com.korneysoft.multiplicationtable.data.SoundRepositoryAssets
+import com.korneysoft.multiplicationtable.R
+import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    val repo by lazy { getSoundRepository() }
-    private fun getSoundRepository(): SoundRepositoryAssets? {
-        return (activity as MainActivity).repo
-    }
+    @Inject
+    lateinit var soundRepository: SoundRepository
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -34,7 +35,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.buttonSettings.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
         }
-        applyPreferences()
+        if (savedInstanceState == null) {
+            SettingsFragment.applyPreferences(context, soundRepository)
+        }
     }
 
 
@@ -47,15 +50,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             titleSelectFragment
         )
         findNavController().navigate(direction)
-    }
-
-    private fun applyPreferences() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        repo?.let { repo ->
-            val currVoice = prefs.getString(getString(R.string.key_voice), repo.voices[0])
-            if (currVoice != null) {
-                repo.setCurrentVoice(currVoice)
-            }
-        }
     }
 }

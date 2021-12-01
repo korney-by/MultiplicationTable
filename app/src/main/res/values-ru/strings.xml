@@ -25,4 +25,5 @@
     <string name="pronunciation_header">Произношение</string>
     <string name="voice_title">Голос</string>
     <string name="speaking_speed">Скорость речи</string>
+    <string name="start">Начать</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.korneysoft.multiplicationtable.entities
+package com.korneysoft.multiplicationtable.domain.entities
 
 enum class TaskStatus {
     NOT_STUDIED,
