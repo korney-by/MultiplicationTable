@@ -1,21 +1,21 @@
 package com.korneysoft.multiplicationtable.fragments
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import androidx.preference.SeekBarPreference
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.fragments_viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-
-import androidx.lifecycle.lifecycleScope
-import androidx.preference.SeekBarPreference
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -41,10 +41,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val voiceSpeedSeekBar: SeekBarPreference? =
             findPreference(getString(R.string.key_voice_speed)) as SeekBarPreference?
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            voiceSpeedSeekBar?.isVisible = false
+            return
+        }
+
         voiceSpeedSeekBar?.let {
             it.min = 50
             it.max = 200
-            it.seekBarIncrement=5
             it.setOnPreferenceChangeListener { preference, newValue ->
                 setVoiceSpeed(newValue as Int)
 

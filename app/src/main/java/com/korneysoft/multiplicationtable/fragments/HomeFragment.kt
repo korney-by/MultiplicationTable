@@ -1,6 +1,7 @@
 package com.korneysoft.multiplicationtable.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -9,6 +10,7 @@ import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+private const val TAG="T7-HomeFragment"
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -17,6 +19,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var soundRepository: SoundRepository
 
     private lateinit var binding: FragmentHomeBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        SettingsFragment.applyPreferences(context, soundRepository)
+        Log.d(TAG,"onCreate")
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,10 +43,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.buttonSettings.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
         }
-        if (savedInstanceState == null) {
-            SettingsFragment.applyPreferences(context, soundRepository)
-        }
     }
+
 
 
     private fun openSelect(isStudyMode: Boolean) {
