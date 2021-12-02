@@ -4,16 +4,18 @@ import android.content.res.AssetFileDescriptor
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Singleton
 
-@Singleton
 interface SoundRepository {
     val defaultVoice: String
-    val currentVoice: String
+    val voice: String
+    val defaultVoiceSpeed: Int
+    val voiceSpeed: Int
     val onChangeVoiceFlow: SharedFlow<String>
-    var onChangeVoice: (() -> Unit)?
+    val onChangeVoiceSpeedFlow: SharedFlow<Int>
     val testSoundFileId: String
     val voices: List<String>
     val NONE: String
 
     fun getSoundFileDescriptor(taskId: String): AssetFileDescriptor?
     fun setCurrentVoice(voiceName: String)
+    fun setVoiceSpeed(speedInPercent: Int)
 }

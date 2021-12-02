@@ -12,10 +12,10 @@ import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.fragments_viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import android.content.SharedPreferences
 
-import android.R.string.no
-import androidx.viewbinding.ViewBindings
+import androidx.lifecycle.lifecycleScope
+import androidx.preference.SeekBarPreference
+import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -33,37 +33,73 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fillListVoices()
-        setListeners()
-
-
+        setListVoiceSettings()
+        setSeekBarSettings()
     }
 
-    private fun setListeners() {
+    private fun setSeekBarSettings() {
+        val voiceSpeedSeekBar: SeekBarPreference? =
+            findPreference(getString(R.string.key_voice_speed)) as SeekBarPreference?
 
+        voiceSpeedSeekBar?.let {
+            it.min = 50
+            it.max = 200
+            it.seekBarIncrement=5
+            it.setOnPreferenceChangeListener { preference, newValue ->
+                setVoiceSpeed(newValue as Int)
 
+                preference.setTitle(getString(R.string.speaking_speed) + " $newValue %")
+                true
+            }
+        }
+        lunchCollectChangeVoiceSpeedFlow()
     }
 
-    private fun fillListVoices() {
-        val voiceListPreference: ListPreference? =
+    private fun setListVoiceSettings() {
+        val voiceList: ListPreference? =
             findPreference(getString(R.string.key_voice)) as ListPreference?
 
-        voiceListPreference?.let {
+        voiceList?.let {
             val entries = getNamesVoices(soundRepository.voices).toTypedArray()
             val entryValues = soundRepository.voices.toTypedArray()
             if (it.value == null) {
                 it.value = entryValues[0]
             }
-            voiceListPreference.setEntries(entries)
-            voiceListPreference.setEntryValues(entryValues)
+            it.setEntries(entries)
+            it.setEntryValues(entryValues)
 
-            voiceListPreference. setOnPreferenceChangeListener { preference, newValue ->
-                applyPreferences(context, soundRepository)
+            it.setOnPreferenceChangeListener { preference, newValue ->
+                setVoice(newValue as String)
                 true
             }
         }
-
+        lunchCollectChangeVoiceFlow()
     }
+
+    private fun lunchCollectChangeVoiceFlow() {
+        lifecycleScope.launchWhenStarted {
+            model.onChangeVoiceFlow.collect {
+                model.playTestSound()
+            }
+        }
+    }
+
+    private fun lunchCollectChangeVoiceSpeedFlow() {
+        lifecycleScope.launchWhenStarted {
+            model.onChangeVoiceSpeedFlow.collect {
+                model.playTestSound()
+            }
+        }
+    }
+
+    private fun setVoice(voice: String) {
+        soundRepository.setCurrentVoice(voice)
+    }
+
+    private fun setVoiceSpeed(speed: Int) {
+        soundRepository.setVoiceSpeed(speed)
+    }
+
 
     private fun getNamesVoices(list: List<String>): List<String> {
         val namesList = mutableListOf<String>()

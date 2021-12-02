@@ -1,43 +1,42 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.SettingsFragment">
 
     <PreferenceCategory app:title="@string/pronunciation_header">
 
-<!--        <EditTextPreference-->
-<!--            app:key="signature"-->
-<!--            app:title="@string/signature_title"-->
-<!--            app:useSimpleSummaryProvider="true" />-->
+        <!--        <EditTextPreference-->
+        <!--            app:key="signature"-->
+        <!--            app:title="@string/signature_title"-->
+        <!--            app:useSimpleSummaryProvider="true" />-->
 
-        <ListPreference
-            app:key="voice"
+        <androidx.preference.ListPreference
+            app:key="@string/key_voice"
             app:title="@string/voice_title"
             app:useSimpleSummaryProvider="true" />
 
-<!--        <SeekBarPreference-->
-<!--            app:defaultValue="5"-->
-<!--            app:val="10"-->
+        <SeekBarPreference
+            app:key="@string/key_voice_speed"
 
-<!--            app:showSeekBarValue="true"-->
-<!--            app:key="COUNT_SPEED"-->
-<!--            app:title="@string/speaking_speed"-->
-<!--            />-->
+            app:title="@string/speaking_speed"
+            />
+
 
     </PreferenceCategory>
 
-<!--    <PreferenceCategory app:title="@string/sync_header">-->
+    <!--    <PreferenceCategory app:title="@string/sync_header">-->
 
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="sync"-->
-<!--            app:title="@string/sync_title" />-->
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="sync"-->
+    <!--            app:title="@string/sync_title" />-->
 
-<!--        <SwitchPreferenceCompat-->
-<!--            app:dependency="sync"-->
-<!--            app:key="attachment"-->
-<!--            app:summaryOff="@string/attachment_summary_off"-->
-<!--            app:summaryOn="@string/attachment_summary_on"-->
-<!--            app:title="@string/attachment_title" />-->
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:dependency="sync"-->
+    <!--            app:key="attachment"-->
+    <!--            app:summaryOff="@string/attachment_summary_off"-->
+    <!--            app:summaryOn="@string/attachment_summary_on"-->
+    <!--            app:title="@string/attachment_title" />-->
 
-<!--    </PreferenceCategory>-->
+    <!--    </PreferenceCategory>-->
 
 </PreferenceScreen>

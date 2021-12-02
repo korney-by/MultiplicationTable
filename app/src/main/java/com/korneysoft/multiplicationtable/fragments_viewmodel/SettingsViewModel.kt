@@ -1,5 +1,6 @@
 package com.korneysoft.multiplicationtable.fragments_viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.korneysoft.multiplicationtable.domain.data.SoundRepository
@@ -9,31 +10,17 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG="T7-SettingsViewModel"
+
 @HiltViewModel
 class SettingsViewModel @Inject constructor(private val soundRepository: SoundRepository) :
     ViewModel() {
 
-    val onChangeVoiceF = soundRepository.onChangeVoiceFlow
+    val onChangeVoiceFlow = soundRepository.onChangeVoiceFlow
+    val onChangeVoiceSpeedFlow = soundRepository.onChangeVoiceSpeedFlow
 
     init {
-        soundRepository.onChangeVoice = {
-            playTestSound()
-        }
-
-        lunchCollectChangeVoiceFlow()
-    }
-
-    override fun onCleared() {
-        soundRepository.onChangeVoice=null
-        super.onCleared()
-    }
-
-    private fun lunchCollectChangeVoiceFlow() {
-        viewModelScope.launch {
-            onChangeVoiceF.collect {
-                playTestSound()
-            }
-        }
+        Log.d(TAG,"soundRepository - ${soundRepository.toString()}")
     }
 
      fun playTestSound() {

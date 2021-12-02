@@ -17,17 +17,19 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     override val NONE = Companion.NONE
     override val testSoundFileId: String = SOUND_TEST
     override val defaultVoice: String
-    override val currentVoice: String get() = currentVoiceFolder
+    override val voice: String get() = currentVoiceFolder
+    override val defaultVoiceSpeed: Int = DEFAULT_VOICE_SPEED
+    override val voiceSpeed: Int get() = currentVoiceSpeed
     override val voices: List<String>
 
     private val _onChangeVoiceFlow = MutableSharedFlow<String>()
     override val onChangeVoiceFlow = _onChangeVoiceFlow.asSharedFlow()
-    override var onChangeVoice: (() -> Unit)? = null
 
-//    private val _commandToPlayerFlow = MutableSharedFlow<String>()
-//    val commandToPlayerFlow = _commandToPlayerFlow.asSharedFlow()
+    private val _onChangeVoiceSpeedFlow = MutableSharedFlow<Int>()
+    override val onChangeVoiceSpeedFlow = _onChangeVoiceSpeedFlow.asSharedFlow()
 
     private var currentVoiceFolder: String = NONE
+    private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
 
     init {
         voices = readVoices()
@@ -53,18 +55,32 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
 
     override fun setCurrentVoice(newVoiceName: String) {
 
-
         currentVoiceFolder = if (voices.contains(newVoiceName)) {
             newVoiceName
         } else {
             NONE
         }
-        onChangeVoice?.invoke()
-        GlobalScope.launch {
-            _onChangeVoiceFlow.emit(newVoiceName)
-        }
 
+        onChangeVoice()
     }
+
+    private fun onChangeVoice() {
+        GlobalScope.launch {
+            _onChangeVoiceFlow.emit(currentVoiceFolder)
+        }
+    }
+
+    override fun setVoiceSpeed(speedInPercent: Int) {
+        currentVoiceSpeed = speedInPercent
+        onChangeVoiceSpeed()
+    }
+
+    private fun onChangeVoiceSpeed() {
+        GlobalScope.launch {
+            _onChangeVoiceSpeedFlow.emit(currentVoiceSpeed)
+        }
+    }
+
 
     private fun getSoundFileName(taskId: String): String {
         if (currentVoiceFolder == NONE) {
@@ -76,6 +92,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     companion object Companion {
         private const val SOUNDS_FOLDER = "sounds"
         private const val SOUND_FILE_TYPE = ".mp3"
+        private const val DEFAULT_VOICE_SPEED = 100 // in percent
         const val SOUND_TEST = "2x2="
         private const val NONE = ""
     }

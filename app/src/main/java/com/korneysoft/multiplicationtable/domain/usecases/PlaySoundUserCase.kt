@@ -8,7 +8,7 @@ class PlaySoundUserCase(private val soundRepository: SoundRepository) {
     fun execute(taskId: String) {
         val fileDescriptor = soundRepository.getSoundFileDescriptor(taskId)
         fileDescriptor?.let {
-            Speaker.play(fileDescriptor)
+            Speaker.play(fileDescriptor,soundRepository.voiceSpeed)
         }
     }
 }
