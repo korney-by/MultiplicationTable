@@ -11,8 +11,6 @@ interface SoundRepository {
     val VOICE_SPEED_DEFAULT: Int
     val VOICE_SPEED_MIN: Int
     val VOICE_SPEED_MAX: Int
-    val onChangeVoiceFlow: SharedFlow<String>
-    val onChangeVoiceSpeedFlow: SharedFlow<Int>
     val testSoundFileId: String
     val voices: List<String>
     val NONE: String

@@ -2,6 +2,7 @@ package com.korneysoft.multiplicationtable.domain.data
 
 import android.content.Context
 import android.content.res.AssetFileDescriptor
+import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -9,6 +10,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+
+private const val TAG="T7-SoundReposAssets"
 
 @Singleton
 class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appContext: Context) :
@@ -24,16 +27,11 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     override val VOICE_SPEED_MAX = MAX_VOICE_SPEED
     override val voices: List<String>
 
-    private val _onChangeVoiceFlow = MutableSharedFlow<String>(0)
-    override val onChangeVoiceFlow = _onChangeVoiceFlow.asSharedFlow()
-
-    private val _onChangeVoiceSpeedFlow = MutableSharedFlow<Int>(0)
-    override val onChangeVoiceSpeedFlow = _onChangeVoiceSpeedFlow.asSharedFlow()
-
     private var currentVoiceFolder: String = NONE
     private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
 
     init {
+        Log.d(TAG,"init")
         voices = readVoices()
         defaultVoice = voices[0]
         setVoice(defaultVoice)
@@ -62,27 +60,11 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         } else {
             NONE
         }
-
-        onChangeVoice()
-    }
-
-    private fun onChangeVoice() {
-        GlobalScope.launch {
-            _onChangeVoiceFlow.emit(currentVoiceFolder)
-        }
     }
 
     override fun setVoiceSpeed(speedInPercent: Int) {
         currentVoiceSpeed = speedInPercent
-        onChangeVoiceSpeed()
     }
-
-    private fun onChangeVoiceSpeed() {
-        GlobalScope.launch {
-            _onChangeVoiceSpeedFlow.emit(currentVoiceSpeed)
-        }
-    }
-
 
     private fun getSoundFileName(taskId: String): String {
         if (currentVoiceFolder == NONE) {

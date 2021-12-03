@@ -1,21 +1,21 @@
 package com.korneysoft.multiplicationtable.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import androidx.preference.SeekBarPreference
 import com.korneysoft.multiplicationtable.R
-import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.fragments_viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+
+private const val TAG = "T7-SettingsFragment"
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -40,6 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun lunchCollectVoiceSpeedStateFlow() {
         lifecycleScope.launchWhenStarted {
             model.voiceSpeedStateFlow.collect {
+                Log.d(TAG, "voiceSpeedStateFlow.collect")
                 voiceSpeedSeekBar?.value = it
                 setTitleVoiceSpeed(it)
             }
@@ -74,10 +75,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         voiceSpeedSeekBar?.let {
             it.min = model.VOICE_SPEED_MIN
             it.max = model.VOICE_SPEED_MAX
-            // it.title = getTitleVoiceSpeed(it.value)
             it.setOnPreferenceChangeListener { preference, newValue ->
                 model.setVoiceSpeed(newValue as Int)
-                // preference.title = getTitleVoiceSpeed(newValue)
                 true
             }
         }
@@ -89,11 +88,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             it.title = getString(R.string.speaking_speed, value)
         }
     }
-
-//    @SuppressLint("StringFormatInvalid")
-//    private fun getTitleVoiceSpeed(value: Int): String {
-//        return getString(R.string.speaking_speed, value)
-//    }
 
     private fun getNamesVoices(list: List<String>): List<String> {
         val namesList = mutableListOf<String>()
@@ -108,26 +102,5 @@ class SettingsFragment : PreferenceFragmentCompat() {
             return getString(resId)
         }
         return stringName
-    }
-
-    companion object {
-
-        fun applyPreferences(context: Context?, soundRepository: SoundRepository) {
-            context?.let {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-                val currVoice = prefs.getString(
-                    context.getString(R.string.key_voice),
-                    soundRepository.defaultVoice
-                )
-                currVoice?.let { soundRepository.setVoice(currVoice) }
-
-                val voiceSpeed = prefs.getInt(
-                    context.getString(R.string.key_voice_speed),
-                    soundRepository.VOICE_SPEED_DEFAULT
-                )
-                soundRepository.setVoiceSpeed(voiceSpeed)
-            }
-
-        }
     }
 }

@@ -5,12 +5,11 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.preference.Preference
 import com.korneysoft.multiplicationtable.R
-import com.korneysoft.multiplicationtable.application.Preferences
-import com.korneysoft.multiplicationtable.domain.data.SoundRepository
+import com.korneysoft.multiplicationtable.application.AppPreferences
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.prefs.Preferences
 import javax.inject.Inject
 
 private const val TAG = "T7-HomeFragment"
@@ -18,19 +17,7 @@ private const val TAG = "T7-HomeFragment"
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    @Inject
-    lateinit var soundRepository: SoundRepository
-
     private lateinit var binding: FragmentHomeBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        SettingsFragment.applyPreferences(context, soundRepository)
-//        val pref = Preferences()
-//        pref.load()
-        Log.d(TAG, "onCreate")
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

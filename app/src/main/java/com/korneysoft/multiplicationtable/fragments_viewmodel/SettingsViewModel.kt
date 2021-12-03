@@ -22,15 +22,12 @@ class SettingsViewModel @Inject constructor(private val soundRepository: SoundRe
     val defaultVoice by lazy { soundRepository.defaultVoice }
     val VOICE_SPEED_MAX by lazy { soundRepository.VOICE_SPEED_MAX }
     val VOICE_SPEED_MIN by lazy { soundRepository.VOICE_SPEED_MIN }
-    val VOICE_SPEED_DEFAULT by lazy { soundRepository.VOICE_SPEED_DEFAULT }
 
     private val _voiceSpeedStateFlow by lazy{ MutableStateFlow<Int>(soundRepository.voiceSpeed)}
     val voiceSpeedStateFlow: StateFlow<Int> =_voiceSpeedStateFlow
 
     init {
         Log.d(TAG, "soundRepository - ${soundRepository.toString()}")
-        lunchCollectChangeVoiceFlow()
-        lunchCollectChangeVoiceSpeedFlow()
     }
 
     private fun lunchEmitVoiceSpeedStateFlow(){
@@ -39,28 +36,14 @@ class SettingsViewModel @Inject constructor(private val soundRepository: SoundRe
         }
     }
 
-    private fun lunchCollectChangeVoiceFlow() {
-        viewModelScope.launch {
-            soundRepository.onChangeVoiceFlow.collect {
-                playTestSound()
-            }
-        }
-    }
-
-    private fun lunchCollectChangeVoiceSpeedFlow() {
-        viewModelScope.launch {
-            soundRepository.onChangeVoiceSpeedFlow.collect {
-                playTestSound()
-            }
-        }
-    }
-
     fun setVoice(voice: String) {
         soundRepository.setVoice(voice)
+        playTestSound()
     }
 
     fun setVoiceSpeed(speed: Int) {
         soundRepository.setVoiceSpeed(speed)
+        playTestSound()
         lunchEmitVoiceSpeedStateFlow()
     }
 
