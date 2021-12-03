@@ -15,6 +15,5 @@ class MainApplication : Application() {
         super.onCreate()
         appPreferences.load()
         //Log.d(TAG, "appPreferences.load() - $appPreferences")
-
     }
 }

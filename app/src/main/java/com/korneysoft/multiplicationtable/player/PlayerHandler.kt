@@ -4,13 +4,17 @@ import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.os.Build
-
+import android.util.Log
+import javax.inject.Inject
+import javax.inject.Singleton
 
 object PlayerHandler {
-    fun play(fileDescriptor: AssetFileDescriptor, speedInPercent: Int = 100) {
-        var playbackParams: PlaybackParams
+    val mediaPlayer = MediaPlayer()
 
-        val mediaPlayer = MediaPlayer()
+    fun play(fileDescriptor: AssetFileDescriptor, speedInPercent: Int = 100) {
+        val playbackParams: PlaybackParams
+
+        mediaPlayer.reset()
 
         try {
             mediaPlayer.setDataSource(
@@ -30,6 +34,7 @@ object PlayerHandler {
 
         } catch (ex: Exception) {
             //Toast.makeText(context, ex.message, Toast.LENGTH_LONG).show()
+            Log.d("T7-Player","${ex.message}")
         }
     }
 }

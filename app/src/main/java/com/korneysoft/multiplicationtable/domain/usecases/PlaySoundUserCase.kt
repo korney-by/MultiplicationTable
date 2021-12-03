@@ -2,6 +2,7 @@ package com.korneysoft.multiplicationtable.domain.usecases
 
 import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.player.PlayerHandler
+import javax.inject.Inject
 
 class PlaySoundUserCase(private val soundRepository: SoundRepository) {
 
