@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.domain.usecases.PlaySoundUserCase
-import com.korneysoft.multiplicationtable.player.Speaker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

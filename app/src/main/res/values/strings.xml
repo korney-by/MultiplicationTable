@@ -23,7 +23,7 @@
     <string name="robot_maxim">Robot Maxim (ru)</string>
     <string name="pronunciation_header">Pronunciation</string>
     <string name="voice_title">Voice</string>
-    <string name="speaking_speed">Speaking speed</string>
+    <string name="speaking_speed">Speaking speed - %1$d\%%</string>
     <string name="key_voice" translatable="false">voice</string>
     <string name="key_voice_speed" translatable="false">voice_speed</string>
     <string name="start">Start</string>

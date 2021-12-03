@@ -6,9 +6,11 @@ import javax.inject.Singleton
 
 interface SoundRepository {
     val defaultVoice: String
-    val voice: String
-    val defaultVoiceSpeed: Int
+    val voiceName: String
     val voiceSpeed: Int
+    val VOICE_SPEED_DEFAULT: Int
+    val VOICE_SPEED_MIN: Int
+    val VOICE_SPEED_MAX: Int
     val onChangeVoiceFlow: SharedFlow<String>
     val onChangeVoiceSpeedFlow: SharedFlow<Int>
     val testSoundFileId: String
@@ -16,6 +18,6 @@ interface SoundRepository {
     val NONE: String
 
     fun getSoundFileDescriptor(taskId: String): AssetFileDescriptor?
-    fun setCurrentVoice(voiceName: String)
+    fun setVoice(voiceName: String)
     fun setVoiceSpeed(speedInPercent: Int)
 }

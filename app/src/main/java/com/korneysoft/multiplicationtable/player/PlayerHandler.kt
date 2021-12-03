@@ -6,7 +6,7 @@ import android.media.PlaybackParams
 import android.os.Build
 
 
-object Speaker {
+object PlayerHandler {
     fun play(fileDescriptor: AssetFileDescriptor, speedInPercent: Int = 100) {
         var playbackParams: PlaybackParams
 

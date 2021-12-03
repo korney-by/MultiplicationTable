@@ -17,15 +17,17 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     override val NONE = Companion.NONE
     override val testSoundFileId: String = SOUND_TEST
     override val defaultVoice: String
-    override val voice: String get() = currentVoiceFolder
-    override val defaultVoiceSpeed: Int = DEFAULT_VOICE_SPEED
+    override val voiceName: String get() = currentVoiceFolder
     override val voiceSpeed: Int get() = currentVoiceSpeed
+    override val VOICE_SPEED_DEFAULT: Int = DEFAULT_VOICE_SPEED
+    override val VOICE_SPEED_MIN = MIN_VOICE_SPEED
+    override val VOICE_SPEED_MAX = MAX_VOICE_SPEED
     override val voices: List<String>
 
-    private val _onChangeVoiceFlow = MutableSharedFlow<String>()
+    private val _onChangeVoiceFlow = MutableSharedFlow<String>(0)
     override val onChangeVoiceFlow = _onChangeVoiceFlow.asSharedFlow()
 
-    private val _onChangeVoiceSpeedFlow = MutableSharedFlow<Int>()
+    private val _onChangeVoiceSpeedFlow = MutableSharedFlow<Int>(0)
     override val onChangeVoiceSpeedFlow = _onChangeVoiceSpeedFlow.asSharedFlow()
 
     private var currentVoiceFolder: String = NONE
@@ -34,7 +36,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     init {
         voices = readVoices()
         defaultVoice = voices[0]
-        setCurrentVoice(defaultVoice)
+        setVoice(defaultVoice)
     }
 
     private fun readVoices(): List<String> {
@@ -53,7 +55,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         }
     }
 
-    override fun setCurrentVoice(newVoiceName: String) {
+    override fun setVoice(newVoiceName: String) {
 
         currentVoiceFolder = if (voices.contains(newVoiceName)) {
             newVoiceName
@@ -93,6 +95,8 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         private const val SOUNDS_FOLDER = "sounds"
         private const val SOUND_FILE_TYPE = ".mp3"
         private const val DEFAULT_VOICE_SPEED = 100 // in percent
+        private const val MIN_VOICE_SPEED = 50 // in percent
+        private const val MAX_VOICE_SPEED = 200 // in percent
         const val SOUND_TEST = "2x2="
         private const val NONE = ""
     }
