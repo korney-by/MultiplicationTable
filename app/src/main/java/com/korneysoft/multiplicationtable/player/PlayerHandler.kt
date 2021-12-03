@@ -5,13 +5,11 @@ import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.os.Build
 import android.util.Log
-import javax.inject.Inject
-import javax.inject.Singleton
 
 object PlayerHandler {
     val mediaPlayer = MediaPlayer()
 
-    fun play(fileDescriptor: AssetFileDescriptor, speedInPercent: Int = 100) {
+    fun play(fileDescriptor: AssetFileDescriptor, speedInPercent:Int) {
         val playbackParams: PlaybackParams
 
         mediaPlayer.reset()
@@ -25,7 +23,7 @@ object PlayerHandler {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 playbackParams = PlaybackParams()
-                playbackParams.speed = speedInPercent.toFloat() / 100
+                playbackParams.speed = speedInPercentToPlaybackSpeed(speedInPercent)
                 mediaPlayer.playbackParams=playbackParams
             }
 
@@ -36,5 +34,9 @@ object PlayerHandler {
             //Toast.makeText(context, ex.message, Toast.LENGTH_LONG).show()
             Log.d("T7-Player","${ex.message}")
         }
+    }
+
+    private fun speedInPercentToPlaybackSpeed(percent:Int):Float{
+        return percent.toFloat() / 100
     }
 }
