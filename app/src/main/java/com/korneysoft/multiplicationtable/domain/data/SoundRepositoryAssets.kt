@@ -5,13 +5,11 @@ import android.content.res.AssetFileDescriptor
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val TAG="T7-SoundReposAssets"
+private const val TAG = "T7-SoundReposAssets"
 
 @Singleton
 class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appContext: Context) :
@@ -31,7 +29,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
 
     init {
-        Log.d(TAG,"init")
+        Log.d(TAG, "init")
         voices = readVoices()
         defaultVoice = voices[0]
         setVoice(defaultVoice)
@@ -39,7 +37,13 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
 
     private fun readVoices(): List<String> {
         val fileList = appContext.assets.list(SOUNDS_FOLDER)
-        return fileList?.toList() ?: listOf()
+        val voiceList = mutableListOf<String>()
+        fileList?.forEach {
+            if (it.startsWith("voice_")) {
+                voiceList.add(it)
+            }
+        }
+        return voiceList
     }
 
     override fun getSoundFileDescriptor(taskId: String): AssetFileDescriptor? {
@@ -54,11 +58,8 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     }
 
     override fun setVoice(newVoiceName: String) {
-
-        currentVoiceFolder = if (voices.contains(newVoiceName)) {
-            newVoiceName
-        } else {
-            NONE
+        if (voices.contains(newVoiceName)) {
+            currentVoiceFolder = newVoiceName
         }
     }
 

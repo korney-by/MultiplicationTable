@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
@@ -21,23 +23,29 @@ private const val TAG = "T7-SettingsFragment"
 class SettingsFragment : PreferenceFragmentCompat() {
     private val model by viewModels<SettingsViewModel>()
     private var voiceSpeedSeekBar: SeekBarPreference? = null
+    private val isSupportVoiceSpeed = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        voiceSpeedSeekBar =
+            findPreference(getString(R.string.key_voice_speed)) as SeekBarPreference?
+
+        voiceSpeedSeekBar?.isVisible = isSupportVoiceSpeed
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setListVoiceSettings()
 
-        voiceSpeedSeekBar =
-            findPreference(getString(R.string.key_voice_speed)) as SeekBarPreference?
-        setSeekBarSettings()
-        lunchCollectVoiceSpeedStateFlow()
+        if (isSupportVoiceSpeed) {
+            setSeekBarSettings()
+            lunchCollectVoiceSpeedStateFlow()
+        }
     }
 
     private fun lunchCollectVoiceSpeedStateFlow() {
+        if (!isSupportVoiceSpeed) return
+
         lifecycleScope.launchWhenStarted {
             model.voiceSpeedStateFlow.collect {
                 Log.d(TAG, "voiceSpeedStateFlow.collect")
@@ -51,31 +59,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val voiceList: ListPreference? =
             findPreference(getString(R.string.key_voice)) as ListPreference?
 
-        voiceList?.let {
-            it.entries = getNamesVoices(model.voices).toTypedArray()
-            it.entryValues = model.voices.toTypedArray()
+        voiceList?.apply {
+            entries = getNamesVoices(model.voices).toTypedArray()
+            entryValues = model.voices.toTypedArray()
+            value = model.defaultVoice
 
-            if (it.value == null) {
-                it.value = model.defaultVoice
-            }
-
-            it.setOnPreferenceChangeListener { preference, newValue ->
+            setOnPreferenceChangeListener { preference, newValue ->
                 model.setVoice(newValue as String)
                 true
             }
         }
     }
 
-    private fun setSeekBarSettings() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            voiceSpeedSeekBar?.isVisible = false
-            return
-        }
 
-        voiceSpeedSeekBar?.let {
-            it.min = model.VOICE_SPEED_MIN
-            it.max = model.VOICE_SPEED_MAX
-            it.setOnPreferenceChangeListener { preference, newValue ->
+    private fun setSeekBarSettings() {
+        voiceSpeedSeekBar?.apply {
+            min = model.VOICE_SPEED_MIN
+            max = model.VOICE_SPEED_MAX
+            setOnPreferenceChangeListener { preference, newValue ->
                 model.setVoiceSpeed(newValue as Int)
                 true
             }
@@ -84,8 +85,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     @SuppressLint("StringFormatInvalid")
     private fun setTitleVoiceSpeed(value: Int) {
-        voiceSpeedSeekBar?.let {
-            it.title = getString(R.string.speaking_speed, value)
+        voiceSpeedSeekBar?.apply {
+            title = getString(R.string.speaking_speed, value)
         }
     }
 
