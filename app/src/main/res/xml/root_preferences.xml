@@ -17,9 +17,7 @@
 
         <SeekBarPreference
             app:key="@string/key_voice_speed"
-
-            app:title="@string/speaking_speed"
-            />
+            app:title="@string/speaking_speed" />
 
 
     </PreferenceCategory>
