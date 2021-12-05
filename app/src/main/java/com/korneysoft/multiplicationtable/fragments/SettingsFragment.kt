@@ -60,7 +60,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findPreference(getString(R.string.key_voice)) as ListPreference?
 
         voiceList?.apply {
-            entries = getNamesVoices(model.voices).toTypedArray()
+            val e=model.voices
+            entries = getNamesVoices(e).toTypedArray()
             entryValues = model.voices.toTypedArray()
             value = model.defaultVoice
 

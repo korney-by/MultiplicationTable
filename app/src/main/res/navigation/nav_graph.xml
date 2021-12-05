@@ -58,7 +58,7 @@
     <fragment
         android:id="@+id/testFragment"
         android:name="com.korneysoft.multiplicationtable.TestFragment"
-        android:label="@string/сheck"
+        android:label="@string/check"
         tools:layout="@layout/fragment_test" >
         <argument
             android:name="test_by_number"

@@ -2,9 +2,7 @@ package com.korneysoft.multiplicationtable.domain.data
 
 import android.content.Context
 import android.content.res.AssetFileDescriptor
-import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.*
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -29,7 +27,6 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
 
     init {
-        Log.d(TAG, "init")
         voices = readVoices()
         defaultVoice = voices[0]
         setVoice(defaultVoice)
@@ -59,9 +56,9 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         }
     }
 
-    override fun setVoice(newVoiceName: String) {
-        if (voices.contains(newVoiceName)) {
-            currentVoiceFolder = newVoiceName
+    override fun setVoice(voiceName: String) {
+        if (voices.contains(voiceName)) {
+            currentVoiceFolder = voiceName
         }
     }
 

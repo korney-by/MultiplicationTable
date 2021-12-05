@@ -26,11 +26,17 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
         binding.buttonExit.setOnClickListener {
             findNavController().popBackStack()
         }
+        if (savedInstanceState==null) {
+            model.setNumberToStudy(args.studyByNumber)
+        }
+
         binding.buttonStart.setOnClickListener {
-            model.study(1)
+            model.startStudy(args.studyByNumber)
         }
 
         binding.textAction.text = args.subTitleFragment
+
+
     }
 
 }

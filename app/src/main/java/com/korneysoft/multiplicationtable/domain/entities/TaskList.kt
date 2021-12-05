@@ -23,7 +23,7 @@ object TaskList {
     fun getTasksOnNumber(number: Int): List<Task> {
         val tasksOfNumber = mutableListOf<Task>()
         tasks.forEach {
-            if (it.parapeter1 == number || it.parapeter2 == number) {
+            if (it.parameter1 == number || it.parameter2 == number) {
                 tasksOfNumber.add(it)
             }
         }

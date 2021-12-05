@@ -1,16 +1,12 @@
 package com.korneysoft.multiplicationtable.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.korneysoft.multiplicationtable.R
-import com.korneysoft.multiplicationtable.application.AppPreferences
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.prefs.Preferences
-import javax.inject.Inject
 
 private const val TAG = "T7-HomeFragment"
 
@@ -41,7 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun openSelect(isStudyMode: Boolean) {
         val titleSelectFragment = getString(
-            if (isStudyMode) R.string.learning else R.string.сheck
+            if (isStudyMode) R.string.learning else R.string.check
         )
         val direction = HomeFragmentDirections.actionHomeFragmentToSelectFragment(
             isStudyMode,

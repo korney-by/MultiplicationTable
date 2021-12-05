@@ -15,9 +15,9 @@
     <string name="button_by_9">by 9</string>
     <string name="button_by_random">by mixed</string>
     <string name="repeat_aloud">Repeat aloud</string>
-    <string name="сheck">Сheck</string>
+    <string name="check">Check</string>
     <string name="multiplication">Multiplication</string>
-    <string name="multiplication_by">multiplication by  %1$d</string>
+    <string name="multiplication_by">Multiplication by  %1$d</string>
     <string name="whole_table">whole table</string>
     <string name="voice_irina">Irina (ru)</string>
     <string name="voice_robot_maxim">Robot Maxim (ru)</string>
@@ -27,5 +27,6 @@
     <string name="key_voice" translatable="false">voice</string>
     <string name="key_voice_speed" translatable="false">voice_speed</string>
     <string name="start">Start</string>
+    <string name="back">Back</string>
 
 </resources>

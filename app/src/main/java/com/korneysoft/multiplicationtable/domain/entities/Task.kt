@@ -1,21 +1,35 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
 data class Task(
-    val parapeter1: Int,
-    val parapeter2: Int,
+    val parameter1: Int,
+    val parameter2: Int,
     val result: Int,
     val signOperation: Char,
     var status: TaskStatus = TaskStatus.NOT_STUDIED
 ) {
     fun getId(): String {
-        return if (parapeter1 <= parapeter2) {
-            "${parapeter1}x$parapeter2"
+        return if (parameter1 <= parameter2) {
+            "${parameter1}x$parameter2"
         } else {
-            "${parapeter2}x$parapeter1"
+            "${parameter2}x$parameter1"
         }
     }
 
     fun getIdWithResult(): String {
         return getId() + "="
     }
+
+    override fun toString(): String {
+        return if (parameter1 <= parameter2) {
+            "${parameter1} • $parameter2"
+        } else {
+            "${parameter2} • $parameter1"
+        }
+    }
+
+    fun toStringWithResult(): String {
+        return toString() + " = " + result
+    }
+
+
 }

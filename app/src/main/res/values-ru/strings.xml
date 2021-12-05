@@ -16,9 +16,9 @@
     <string name="button_by_9">на 9</string>
     <string name="button_by_random">вперемешку</string>
     <string name="repeat_aloud">Повторяй вслух</string>
-    <string name="сheck">Провеяем</string>
+    <string name="check">Провеяем</string>
     <string name="multiplication">Умножение</string>
-    <string name="multiplication_by">умножение на  %1$d</string>
+    <string name="multiplication_by">Умножение на  %1$d</string>
     <string name="whole_table">вся таблица</string>
     <string name="voice_irina">Ирина (рус)</string>
     <string name="voice_robot_maxim">Робот Максим (рус)</string>
@@ -26,4 +26,5 @@
     <string name="voice_title">Голос</string>
     <string name="speaking_speed">Скорость речи - %1$d\%%</string>
     <string name="start">Начать</string>
+    <string name="back">Вернуться</string>
 </resources>

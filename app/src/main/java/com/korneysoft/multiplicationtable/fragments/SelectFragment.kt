@@ -30,7 +30,6 @@ class SelectFragment : Fragment(R.layout.fragment_select) {
     private fun setOtherClickListeners() {
 
         binding.apply {
-
             buttonBy2.setOnClickListener { openSelectedVariant(NUMBER_2) }
             buttonBy3.setOnClickListener { openSelectedVariant(NUMBER_3) }
             buttonBy4.setOnClickListener { openSelectedVariant(NUMBER_4) }
@@ -79,7 +78,7 @@ class SelectFragment : Fragment(R.layout.fragment_select) {
         val isStudyMode = false
         val direction = SelectFragmentDirections.actionSelectFragmentSelf(
             isStudyMode,
-            getString(R.string.сheck)
+            getString(R.string.check)
         )
         findNavController().navigate(direction)
     }
