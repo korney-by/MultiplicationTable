@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.korneysoft.multiplicationtable"
-        minSdk 21
+        minSdk 19
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -51,6 +51,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation "androidx.fragment:fragment-ktx:1.4.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
 
     implementation "com.google.dagger:hilt-android:$daggerVersion"
     kapt "com.google.dagger:hilt-compiler:$daggerVersion"

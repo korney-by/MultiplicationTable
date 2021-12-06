@@ -9,11 +9,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppPreferences @Inject constructor(@ApplicationContext val context: Context) {
-
-    @Inject
-    lateinit var soundRepository: SoundRepository
-
+class AppPreferences @Inject constructor(
+    @ApplicationContext val context: Context,
+    val soundRepository: SoundRepository
+) {
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     fun load() {

@@ -1,48 +1,57 @@
-package com.korneysoft.multiplicationtable.fragments
+package com.korneysoft.multiplicationtable.fragments.settings
 
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import com.korneysoft.multiplicationtable.R
-import com.korneysoft.multiplicationtable.fragments_viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 private const val TAG = "T7-SettingsFragment"
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
-    private val model by viewModels<SettingsViewModel>()
+    private val viewMmodel by viewModels<SettingsViewModel>()
     private var voiceSpeedSeekBar: SeekBarPreference? = null
+    private val isSupportVoiceSpeed = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        voiceSpeedSeekBar =
+            findPreference(getString(R.string.key_voice_speed)) as SeekBarPreference?
+
+        voiceSpeedSeekBar?.isVisible = isSupportVoiceSpeed
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setListVoiceSettings()
 
-        voiceSpeedSeekBar =
-            findPreference(getString(R.string.key_voice_speed)) as SeekBarPreference?
-        setSeekBarSettings()
-        lunchCollectVoiceSpeedStateFlow()
+        if (isSupportVoiceSpeed) {
+            setSeekBarSettings()
+            lunchCollectVoiceSpeedStateFlow()
+        }
     }
 
     private fun lunchCollectVoiceSpeedStateFlow() {
-        lifecycleScope.launchWhenStarted {
-            model.voiceSpeedStateFlow.collect {
-                Log.d(TAG, "voiceSpeedStateFlow.collect")
-                voiceSpeedSeekBar?.value = it
-                setTitleVoiceSpeed(it)
+        if (!isSupportVoiceSpeed) return
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewMmodel.voiceSpeedStateFlow.collect {
+                    //Log.d(TAG, "voiceSpeedStateFlow.collect")
+                    voiceSpeedSeekBar?.value = it
+                    setTitleVoiceSpeed(it)
+                }
             }
         }
     }
@@ -51,32 +60,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val voiceList: ListPreference? =
             findPreference(getString(R.string.key_voice)) as ListPreference?
 
-        voiceList?.let {
-            it.entries = getNamesVoices(model.voices).toTypedArray()
-            it.entryValues = model.voices.toTypedArray()
+        voiceList?.apply {
+            val e = viewMmodel.voices
+            entries = getNamesVoices(e).toTypedArray()
+            entryValues = viewMmodel.voices.toTypedArray()
+            value = viewMmodel.voice
 
-            if (it.value == null) {
-                it.value = model.defaultVoice
-            }
-
-            it.setOnPreferenceChangeListener { preference, newValue ->
-                model.setVoice(newValue as String)
+            setOnPreferenceChangeListener { preference, newValue ->
+                viewMmodel.setVoice(newValue as String)
                 true
             }
         }
     }
 
-    private fun setSeekBarSettings() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            voiceSpeedSeekBar?.isVisible = false
-            return
-        }
 
-        voiceSpeedSeekBar?.let {
-            it.min = model.VOICE_SPEED_MIN
-            it.max = model.VOICE_SPEED_MAX
-            it.setOnPreferenceChangeListener { preference, newValue ->
-                model.setVoiceSpeed(newValue as Int)
+    private fun setSeekBarSettings() {
+        voiceSpeedSeekBar?.apply {
+            min = viewMmodel.VOICE_SPEED_MIN
+            max = viewMmodel.VOICE_SPEED_MAX
+            setOnPreferenceChangeListener { preference, newValue ->
+                viewMmodel.setVoiceSpeed(newValue as Int)
                 true
             }
         }
@@ -84,8 +87,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     @SuppressLint("StringFormatInvalid")
     private fun setTitleVoiceSpeed(value: Int) {
-        voiceSpeedSeekBar?.let {
-            it.title = getString(R.string.speaking_speed, value)
+        voiceSpeedSeekBar?.apply {
+            title = getString(R.string.speaking_speed, value)
         }
     }
 

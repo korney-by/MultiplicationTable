@@ -2,16 +2,12 @@ package com.korneysoft.multiplicationtable.domain.data
 
 import android.content.Context
 import android.content.res.AssetFileDescriptor
-import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val TAG="T7-SoundReposAssets"
+private const val TAG = "T7-SoundReposAssets"
 
 @Singleton
 class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appContext: Context) :
@@ -26,20 +22,33 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     override val VOICE_SPEED_MIN = MIN_VOICE_SPEED
     override val VOICE_SPEED_MAX = MAX_VOICE_SPEED
     override val voices: List<String>
+    override val repeatSoundFileId: String= SOUND_REPEAT
+    override val helloSoundFileId: String= SOUND_HELLO
 
     private var currentVoiceFolder: String = NONE
     private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
 
     init {
-        Log.d(TAG,"init")
         voices = readVoices()
         defaultVoice = voices[0]
         setVoice(defaultVoice)
     }
 
+    override fun getLearnBySoundFileId(number:Int): String {
+        return SOUND_LEARN_BY+number
+    }
+
     private fun readVoices(): List<String> {
         val fileList = appContext.assets.list(SOUNDS_FOLDER)
-        return fileList?.toList() ?: listOf()
+        val voiceList = mutableListOf<String>()
+
+        // API 21 (maybe not only) returns extra files, so need to check
+        fileList?.forEach {
+            if (it.startsWith(SOUNDS_FOLDER_PREFIX)) {
+                voiceList.add(it)
+            }
+        }
+        return voiceList
     }
 
     override fun getSoundFileDescriptor(taskId: String): AssetFileDescriptor? {
@@ -53,12 +62,9 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         }
     }
 
-    override fun setVoice(newVoiceName: String) {
-
-        currentVoiceFolder = if (voices.contains(newVoiceName)) {
-            newVoiceName
-        } else {
-            NONE
+    override fun setVoice(voiceName: String) {
+        if (voices.contains(voiceName)) {
+            currentVoiceFolder = voiceName
         }
     }
 
@@ -75,11 +81,15 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
 
     companion object Companion {
         private const val SOUNDS_FOLDER = "sounds"
+        private const val SOUNDS_FOLDER_PREFIX = "voice_"
         private const val SOUND_FILE_TYPE = ".mp3"
         private const val DEFAULT_VOICE_SPEED = 100 // in percent
         private const val MIN_VOICE_SPEED = 50 // in percent
         private const val MAX_VOICE_SPEED = 200 // in percent
-        const val SOUND_TEST = "2x2="
+        private const val SOUND_TEST = "2x2="
+        private const val SOUND_REPEAT = "repeat"
+        private const val SOUND_HELLO = "hello"
+        private const val SOUND_LEARN_BY = "by"
         private const val NONE = ""
     }
 }

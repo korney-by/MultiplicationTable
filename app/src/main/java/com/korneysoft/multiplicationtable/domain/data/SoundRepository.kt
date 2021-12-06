@@ -12,10 +12,13 @@ interface SoundRepository {
     val VOICE_SPEED_MIN: Int
     val VOICE_SPEED_MAX: Int
     val testSoundFileId: String
+    val repeatSoundFileId: String
+    val helloSoundFileId: String
     val voices: List<String>
     val NONE: String
 
     fun getSoundFileDescriptor(taskId: String): AssetFileDescriptor?
     fun setVoice(voiceName: String)
     fun setVoiceSpeed(speedInPercent: Int)
+    fun getLearnBySoundFileId(number: Int): String
 }

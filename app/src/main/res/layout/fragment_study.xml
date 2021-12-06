@@ -4,45 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.StudyFragment">
+    tools:context=".fragments.study.StudyFragment">
 
     <TextView
         android:id="@+id/text_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/repeat_aloud"
+        android:layout_margin="16dp"
         android:gravity="center"
-        android:textSize="24dp" />
+        android:text="@string/multiplication"
+        android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/text_instruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/repeat_aloud"
+        android:textSize="26sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/text_action"
+        tools:layout_editor_absoluteX="16dp"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_memory_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+
         app:layout_constraintBottom_toTopOf="@+id/button_exit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_action3" />
+        app:layout_constraintTop_toBottomOf="@+id/text_instruction" />
 
-    <Button
-        android:id="@+id/button_exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="1"
-        android:text="Exit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/button_exit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_weight="1"
+            android:text="@string/back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_stop_repeat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button_stop_repeat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+
+            android:layout_weight="1"
+            android:text="@string/repeat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_exit" />
 
     <Button
         android:id="@+id/button_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start"
+        app:layout_constraintBottom_toTopOf="@+id/button_exit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_action" />
+        app:layout_constraintTop_toBottomOf="@+id/text_instruction" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
