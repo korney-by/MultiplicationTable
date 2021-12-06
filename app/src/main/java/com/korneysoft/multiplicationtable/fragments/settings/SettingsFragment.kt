@@ -1,27 +1,26 @@
-package com.korneysoft.multiplicationtable.fragments
+package com.korneysoft.multiplicationtable.fragments.settings
 
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import com.korneysoft.multiplicationtable.R
-import com.korneysoft.multiplicationtable.fragments_viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 private const val TAG = "T7-SettingsFragment"
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
-    private val model by viewModels<SettingsViewModel>()
+    private val viewMmodel by viewModels<SettingsViewModel>()
     private var voiceSpeedSeekBar: SeekBarPreference? = null
     private val isSupportVoiceSpeed = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
@@ -46,11 +45,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun lunchCollectVoiceSpeedStateFlow() {
         if (!isSupportVoiceSpeed) return
 
-        lifecycleScope.launchWhenStarted {
-            model.voiceSpeedStateFlow.collect {
-                Log.d(TAG, "voiceSpeedStateFlow.collect")
-                voiceSpeedSeekBar?.value = it
-                setTitleVoiceSpeed(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewMmodel.voiceSpeedStateFlow.collect {
+                    //Log.d(TAG, "voiceSpeedStateFlow.collect")
+                    voiceSpeedSeekBar?.value = it
+                    setTitleVoiceSpeed(it)
+                }
             }
         }
     }
@@ -60,13 +61,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findPreference(getString(R.string.key_voice)) as ListPreference?
 
         voiceList?.apply {
-            val e=model.voices
+            val e = viewMmodel.voices
             entries = getNamesVoices(e).toTypedArray()
-            entryValues = model.voices.toTypedArray()
-            value = model.defaultVoice
+            entryValues = viewMmodel.voices.toTypedArray()
+            value = viewMmodel.voice
 
             setOnPreferenceChangeListener { preference, newValue ->
-                model.setVoice(newValue as String)
+                viewMmodel.setVoice(newValue as String)
                 true
             }
         }
@@ -75,10 +76,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun setSeekBarSettings() {
         voiceSpeedSeekBar?.apply {
-            min = model.VOICE_SPEED_MIN
-            max = model.VOICE_SPEED_MAX
+            min = viewMmodel.VOICE_SPEED_MIN
+            max = viewMmodel.VOICE_SPEED_MAX
             setOnPreferenceChangeListener { preference, newValue ->
-                model.setVoiceSpeed(newValue as Int)
+                viewMmodel.setVoiceSpeed(newValue as Int)
                 true
             }
         }

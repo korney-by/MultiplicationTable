@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetStudyListUseCase {
+class GetStudyListUseCase @Inject constructor() {
 //    fun execute(number: Int): Flow<List<Task>> {
 //        val studyList= TaskList.getTasksOnNumber(number)
 //        return flow {

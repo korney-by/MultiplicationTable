@@ -15,7 +15,7 @@
     <string name="button_by_8">на 8</string>
     <string name="button_by_9">на 9</string>
     <string name="button_by_random">вперемешку</string>
-    <string name="repeat_aloud">Повторяй вслух</string>
+    <string name="repeat_aloud">Повторяй вслух:</string>
     <string name="check">Провеяем</string>
     <string name="multiplication">Умножение</string>
     <string name="multiplication_by">Умножение на  %1$d</string>
@@ -27,4 +27,8 @@
     <string name="speaking_speed">Скорость речи - %1$d\%%</string>
     <string name="start">Начать</string>
     <string name="back">Вернуться</string>
+    <string name="settings">Настройки</string>
+    <string name="repeat">Повторить</string>
+    <string name="stop">Остановить</string>
+    <string name="proceed">Продолжить</string>
 </resources>

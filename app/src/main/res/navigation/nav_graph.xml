@@ -36,21 +36,21 @@
             app:destination="@id/selectFragment" />
         <argument
             android:name="isStudy"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
         <argument
             android:name="titleFragment"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/studyFragment"
-        android:name="com.korneysoft.multiplicationtable.fragments.StudyFragment"
+        android:name="com.korneysoft.multiplicationtable.fragments.study.StudyFragment"
         android:label="@string/learning"
-        tools:layout="@layout/fragment_study" >
+        tools:layout="@layout/fragment_study">
         <argument
             android:name="study_by_number"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <argument
             android:name="subTitleFragment"
             app:argType="string" />
@@ -59,19 +59,19 @@
         android:id="@+id/testFragment"
         android:name="com.korneysoft.multiplicationtable.TestFragment"
         android:label="@string/check"
-        tools:layout="@layout/fragment_test" >
+        tools:layout="@layout/fragment_test">
         <argument
             android:name="test_by_number"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <argument
             android:name="subTitleFragment"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.korneysoft.multiplicationtable.fragments.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:name="com.korneysoft.multiplicationtable.fragments.settings.SettingsFragment"
+        android:label="@string/settings" />
     <fragment
         android:id="@+id/statisticFragment"
         android:name="com.korneysoft.multiplicationtable.fragments.StatisticFragment"

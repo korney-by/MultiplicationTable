@@ -22,6 +22,8 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     override val VOICE_SPEED_MIN = MIN_VOICE_SPEED
     override val VOICE_SPEED_MAX = MAX_VOICE_SPEED
     override val voices: List<String>
+    override val repeatSoundFileId: String= SOUND_REPEAT
+    override val helloSoundFileId: String= SOUND_HELLO
 
     private var currentVoiceFolder: String = NONE
     private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
@@ -30,6 +32,10 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         voices = readVoices()
         defaultVoice = voices[0]
         setVoice(defaultVoice)
+    }
+
+    override fun getLearnBySoundFileId(number:Int): String {
+        return SOUND_LEARN_BY+number
     }
 
     private fun readVoices(): List<String> {
@@ -80,7 +86,10 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         private const val DEFAULT_VOICE_SPEED = 100 // in percent
         private const val MIN_VOICE_SPEED = 50 // in percent
         private const val MAX_VOICE_SPEED = 200 // in percent
-        const val SOUND_TEST = "2x2="
+        private const val SOUND_TEST = "2x2="
+        private const val SOUND_REPEAT = "repeat"
+        private const val SOUND_HELLO = "hello"
+        private const val SOUND_LEARN_BY = "by"
         private const val NONE = ""
     }
 }
