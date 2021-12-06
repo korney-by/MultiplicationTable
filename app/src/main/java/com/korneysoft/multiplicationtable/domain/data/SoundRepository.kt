@@ -14,6 +14,7 @@ interface SoundRepository {
     val testSoundFileId: String
     val repeatSoundFileId: String
     val helloSoundFileId: String
+    val rightSoundFileId: String
     val voices: List<String>
     val NONE: String
 

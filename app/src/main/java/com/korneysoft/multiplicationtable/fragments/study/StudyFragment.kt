@@ -16,6 +16,7 @@ import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
 import com.korneysoft.multiplicationtable.domain.entities.ProcessStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -55,12 +56,13 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
 
         binding.textAction.text = args.subTitleFragment
 
+        updateRecyclerView()
         launchCollectTask()
     }
 
     private fun actionButtonStopRepeat() {
         when (viewModel.studyProcessState) {
-            ProcessStatus.RUNNED -> {
+            ProcessStatus.RUNNING -> {
                 viewModel.stopStudyProcess()
             }
             ProcessStatus.STOPPED -> {
@@ -69,18 +71,18 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
             ProcessStatus.FINISHED -> {
                 viewModel.startStudyProcess()
             }
-            ProcessStatus.NOT_RUNNED -> {}
+            ProcessStatus.NOT_RUNNING -> {}
         }
     }
 
     private fun setVisibleButtons() {
-        val isNotRunned=(viewModel.studyProcessState == ProcessStatus.NOT_RUNNED)
+        val isNotRunned = (viewModel.studyProcessState == ProcessStatus.NOT_RUNNING)
         binding.buttonStart.isVisible = isNotRunned
-        binding.buttonStopRepeat.isVisible =!isNotRunned
-        binding.textInstruction.isVisible =!isNotRunned
+        binding.buttonStopRepeat.isVisible = !isNotRunned
+        binding.textInstruction.isVisible = !isNotRunned
 
         when (viewModel.studyProcessState) {
-            ProcessStatus.RUNNED -> {
+            ProcessStatus.RUNNING -> {
                 binding.buttonStopRepeat.text = getString(R.string.stop)
             }
             ProcessStatus.STOPPED -> {
@@ -89,7 +91,7 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
             ProcessStatus.FINISHED -> {
                 binding.buttonStopRepeat.text = getString(R.string.repeat)
             }
-            ProcessStatus.NOT_RUNNED -> {}
+            ProcessStatus.NOT_RUNNING -> {}
         }
     }
 

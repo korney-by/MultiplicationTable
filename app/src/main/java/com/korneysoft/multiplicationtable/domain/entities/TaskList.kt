@@ -20,7 +20,19 @@ object TaskList {
         }
     }
 
-    fun getTasksOnNumber(number: Int): List<Task> {
+    fun getStudyTasksAllTable(): List<Task> {
+        val tasksOfNumber = mutableListOf<Task>()
+        tasks.forEach {
+            if (it.parameter1 <= it.parameter2) {
+                tasksOfNumber.add(it)
+            }
+        }
+        tasksOfNumber.shuffle()
+        return tasksOfNumber
+
+    }
+
+    fun getStudyTasksOnNumber(number: Int): List<Task> {
         val tasksOfNumber = mutableListOf<Task>()
         tasks.forEach {
             if (it.parameter1 == number) {

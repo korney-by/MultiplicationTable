@@ -18,7 +18,7 @@
     <string name="check">Check</string>
     <string name="multiplication">Multiplication</string>
     <string name="multiplication_by">Multiplication by  %1$d</string>
-    <string name="whole_table">whole table</string>
+    <string name="whole_table">shuffled whole table</string>
     <string name="voice_irina">Irina (ru)</string>
     <string name="voice_robot_maxim">Robot Maxim (ru)</string>
     <string name="pronunciation_header">Pronunciation</string>

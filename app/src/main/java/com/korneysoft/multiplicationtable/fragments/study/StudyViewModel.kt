@@ -1,18 +1,20 @@
 package com.korneysoft.multiplicationtable.fragments.study
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.korneysoft.multiplicationtable.domain.entities.ProcessStatus
+import com.korneysoft.multiplicationtable.domain.entities.StudyTime
 import com.korneysoft.multiplicationtable.domain.entities.Task
 import com.korneysoft.multiplicationtable.domain.usecases.GetStudyListUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayLearnByNumUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRepeatUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "T7-StudyViewModel"
@@ -29,8 +31,7 @@ class StudyViewModel @Inject constructor(
     val studyTaskList = mutableListOf<Task>()
     private var studyList = listOf<Task>()
     private var studyJob: Job? = null
-    private var startStudyTaskNum: Int = 0
-    var studyProcessState: ProcessStatus = ProcessStatus.NOT_RUNNED
+    var studyProcessState: ProcessStatus = ProcessStatus.NOT_RUNNING
         private set
 
     private var _studyTaskStateFlow = MutableStateFlow<Int?>(null)
@@ -56,16 +57,15 @@ class StudyViewModel @Inject constructor(
 
     fun setProcessStatus(studyProcessMessage: Int) {
         studyProcessState = when (studyProcessMessage) {
-            STUDY_PROCESS_START -> ProcessStatus.RUNNED
+            STUDY_PROCESS_START -> ProcessStatus.RUNNING
             STUDY_PROCESS_STOP -> ProcessStatus.STOPPED
             STUDY_PROCESS_FINISH -> ProcessStatus.FINISHED
-            else -> ProcessStatus.NOT_RUNNED
+            else -> ProcessStatus.NOT_RUNNING
         }
     }
 
     fun startStudyProcess() {
         studyTaskList.clear()
-        startStudyTaskNum = 0
         continueStudyProcess()
     }
 
@@ -74,16 +74,14 @@ class StudyViewModel @Inject constructor(
         studyJob = viewModelScope.launch {
             _studyTaskStateFlow.emit(STUDY_PROCESS_START)
             playRepeatUseCase.execute()
-            delay((2000).toLong())
-            val startTaskNum = startStudyTaskNum
+            delay((StudyTime.DELAY_FOR_START_MS).toLong())
+            val startTaskNum = studyTaskList.size
             for (i in startTaskNum..studyList.size - 1) {
                 val task = studyList[i]
                 studyTaskList.add(task)
                 _studyTaskStateFlow.emit(i)
-                startStudyTaskNum = i + 1
                 playSoundUseCase.execute(task.getIdWithResult())
-                //Log.d(TAG, task.toStringWithResult())
-                delay((4 * 1000).toLong())
+                delay((StudyTime.DELAY_FOR_REPEAT_MS).toLong())
             }
             _studyTaskStateFlow.emit(STUDY_PROCESS_FINISH)
             studyJob = null
@@ -91,7 +89,7 @@ class StudyViewModel @Inject constructor(
     }
 
     companion object {
-        const val STUDY_PROCESS_START = Int.MIN_VALUE
+         const val STUDY_PROCESS_START = Int.MIN_VALUE
         const val STUDY_PROCESS_STOP = Int.MAX_VALUE - 1
         const val STUDY_PROCESS_FINISH = Int.MAX_VALUE
     }
