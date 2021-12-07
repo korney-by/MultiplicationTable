@@ -21,5 +21,5 @@ interface SoundRepository {
     fun getSoundFileDescriptor(taskId: String): AssetFileDescriptor?
     fun setVoice(voiceName: String)
     fun setVoiceSpeed(speedInPercent: Int)
-    fun getLearnBySoundFileId(number: Int): String
+    fun getStudyBySoundFileId(number: Int): String
 }

@@ -1,6 +1,6 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
-object StudyNumbers {
+object StudyNumber {
     const val NUMBER_2 = 2
     const val NUMBER_3 = 3
     const val NUMBER_4 = 4

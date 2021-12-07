@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.korneysoft.multiplicationtable.domain.entities.ProcessStatus
 import com.korneysoft.multiplicationtable.domain.entities.StudyTime
 import com.korneysoft.multiplicationtable.domain.entities.Task
-import com.korneysoft.multiplicationtable.domain.usecases.GetStudyListUseCase
-import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayLearnByNumUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.task.GetStudyListUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayStudyByNumUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRepeatUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +24,7 @@ class StudyViewModel @Inject constructor(
     private val getStudyListUseCase: GetStudyListUseCase,
     private val playSoundUseCase: PlaySoundUseCase,
     private val playRepeatUseCase: PlayRepeatUseCase,
-    private val playStudyByNumUseCase: PlayLearnByNumUseCase
+    private val playStudyByNumUseCase: PlayStudyByNumUseCase
 ) :
     ViewModel() {
 

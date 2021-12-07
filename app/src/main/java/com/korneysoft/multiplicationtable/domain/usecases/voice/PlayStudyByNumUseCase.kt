@@ -4,10 +4,10 @@ import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.player.PlayerHandler
 import javax.inject.Inject
 
-class PlayLearnByNumUseCase @Inject constructor(private val soundRepository: SoundRepository) {
+class PlayStudyByNumUseCase @Inject constructor(private val soundRepository: SoundRepository) {
     fun execute(number: Int) {
         val fileDescriptor =
-            soundRepository.getSoundFileDescriptor(soundRepository.getLearnBySoundFileId(number))
+            soundRepository.getSoundFileDescriptor(soundRepository.getStudyBySoundFileId(number))
         fileDescriptor?.let {
             PlayerHandler.play(fileDescriptor, soundRepository.voiceSpeed)
         }

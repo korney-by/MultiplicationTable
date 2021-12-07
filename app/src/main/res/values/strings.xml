@@ -17,8 +17,8 @@
     <string name="repeat_aloud">Repeat aloud:</string>
     <string name="check">Check</string>
     <string name="multiplication">Multiplication</string>
-    <string name="multiplication_by">Multiplication by  %1$d</string>
-    <string name="whole_table">shuffled whole table</string>
+    <string name="multiplication_by">multiplication by  %1$d</string>
+    <string name="whole_table">whole shuffled table</string>
     <string name="voice_irina">Irina (ru)</string>
     <string name="voice_robot_maxim">Robot Maxim (ru)</string>
     <string name="pronunciation_header">Pronunciation</string>
@@ -32,5 +32,6 @@
     <string name="repeat">Repeat</string>
     <string name="stop">Stop</string>
     <string name="proceed">Proceed</string>
+    <string name="button_ok">Ok</string>
 
 </resources>

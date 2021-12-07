@@ -35,7 +35,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         setVoice(defaultVoice)
     }
 
-    override fun getLearnBySoundFileId(number:Int): String {
+    override fun getStudyBySoundFileId(number:Int): String {
         return SOUND_LEARN_BY+number
     }
 

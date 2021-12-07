@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class StudyFragment : Fragment(R.layout.fragment_study) {
 
-    val viewModel by viewModels<StudyViewModel>()
+    private val viewModel by viewModels<StudyViewModel>()
 
     private lateinit var binding: FragmentStudyBinding
     private val args: StudyFragmentArgs by navArgs()
@@ -112,7 +112,7 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
                             viewModel.setProcessStatus(it)
                             studyProcessWasFinished()
                         }
-                        else -> {
+                        else -> { // normal process
                             updateRecyclerView()
                         }
                     }

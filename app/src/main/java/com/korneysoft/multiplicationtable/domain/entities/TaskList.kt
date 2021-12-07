@@ -27,9 +27,7 @@ object TaskList {
                 tasksOfNumber.add(it)
             }
         }
-        tasksOfNumber.shuffle()
         return tasksOfNumber
-
     }
 
     fun getStudyTasksOnNumber(number: Int): List<Task> {

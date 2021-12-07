@@ -1,14 +1,13 @@
-package com.korneysoft.multiplicationtable.domain.usecases
+package com.korneysoft.multiplicationtable.domain.usecases.task
 
-import com.korneysoft.multiplicationtable.domain.entities.StudyNumbers
+import com.korneysoft.multiplicationtable.domain.entities.StudyNumber
 import com.korneysoft.multiplicationtable.domain.entities.Task
 import com.korneysoft.multiplicationtable.domain.entities.TaskList
 import javax.inject.Inject
 
-class GetStudyListUseCase @Inject constructor() {
-
+class GetTaskListUseCase @Inject constructor() {
     fun execute(number: Int): List<Task> {
-        return if (number == StudyNumbers.ALL_TABLE) {
+        return if (number == StudyNumber.ALL_TABLE) {
             TaskList.getStudyTasksAllTable()
         } else {
             TaskList.getStudyTasksOnNumber(number)
