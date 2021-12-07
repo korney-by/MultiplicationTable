@@ -3,16 +3,15 @@ package com.korneysoft.multiplicationtable.fragments.test
 import android.os.SystemClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.korneysoft.multiplicationtable.domain.entities.ProcessStatus
-import com.korneysoft.multiplicationtable.domain.entities.ResponseTime
-import com.korneysoft.multiplicationtable.domain.entities.Task
-import com.korneysoft.multiplicationtable.domain.entities.TestTime
+import com.korneysoft.multiplicationtable.domain.entities.*
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetTestListUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,6 +31,9 @@ class TestViewModel @Inject constructor(
 
     var testProcessState: ProcessStatus = ProcessStatus.NOT_RUNNING
         private set
+
+    private var _commandFlow = MutableSharedFlow<Pair<Command, Long?>>()
+    val commandFlow = _commandFlow.asSharedFlow()
 
     private var _testTaskStateFlow = MutableStateFlow<Int?>(null)
     val testTaskStateFlow = _testTaskStateFlow.asStateFlow()

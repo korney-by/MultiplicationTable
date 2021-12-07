@@ -10,6 +10,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.FragmentTestBinding
+import com.korneysoft.multiplicationtable.domain.entities.Command
+import com.korneysoft.multiplicationtable.domain.entities.ProcessStatus
 import com.korneysoft.multiplicationtable.domain.entities.ResponseTime
 import com.korneysoft.multiplicationtable.domain.entities.Task
 import com.korneysoft.multiplicationtable.fragments.study.StudyViewModel
@@ -41,6 +43,27 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         binding.textAction.text = args.subTitleFragment
         launchCollectTask()
         viewModel.startTestProcess()
+    }
+
+    private fun launchCollectCommands() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.commandFlow.collect {
+                        when {
+                            (it.first == Command.PROCESS_START) -> {
+                                viewModel.setProcessStatus(it.second.toInt())
+                                testProcessState =ProcessStatus.RUNNING
+                                testProcessWasStarted()
+                            }
+                            (it.first == Command.PROCESS_STOP) -> {
+
+                            }
+
+
+                        }
+                }
+            }
+        }
     }
 
     private fun launchCollectTask() {
