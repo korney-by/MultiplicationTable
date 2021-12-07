@@ -114,6 +114,9 @@ class Timer @JvmOverloads constructor(
      */
     fun setCurrent(current: Long) {
         currentMs = current
+        if (isFinished) {
+            isFinished = false
+        }
         invalidate()
     }
 
@@ -121,6 +124,7 @@ class Timer @JvmOverloads constructor(
      * Set time period
      */
     fun setPeriod(period: Long) {
+        isFinished = false
         periodMs = period
     }
 

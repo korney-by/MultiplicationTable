@@ -76,7 +76,7 @@ class StudyViewModel @Inject constructor(
             playRepeatUseCase.execute()
             delay((StudyTime.DELAY_FOR_START_MS).toLong())
             val startTaskNum = studyTaskList.size
-            for (i in startTaskNum..studyList.size - 1) {
+            for (i in startTaskNum until studyList.size) {
                 val task = studyList[i]
                 studyTaskList.add(task)
                 _studyTaskStateFlow.emit(i)
