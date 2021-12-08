@@ -7,13 +7,17 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.AttrRes
+import androidx.annotation.RequiresApi
 import com.korneysoft.multiplicationtable.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+import android.graphics.RectF
+
 
 class Timer @JvmOverloads constructor(
     context: Context,
@@ -60,7 +64,8 @@ class Timer @JvmOverloads constructor(
         paint.color = color
         paint.style = if (style == FILL) Paint.Style.FILL else Paint.Style.STROKE
 
-        canvas.drawArc(
+        universalDrawArc(
+            canvas,
             0f,
             0f,
             width.toFloat(),
@@ -71,28 +76,16 @@ class Timer @JvmOverloads constructor(
             paint
         )
 
-
-//        if ((currentMs <= 0) || (currentMs == periodMs)) {
-//            return
-//        }
-
         // draw arrow
-        paint.color = Color.BLACK
+        paint.color = Color.DKGRAY
         val r = halfHeight.toFloat()
 
         val arrowAngel = (2 * percentAngel - (0.5).toFloat()) * PI.toFloat()
         val center = PointF(halfWidth.toFloat(), halfHeight.toFloat())
         val arrowEnd = PointF((r * cos(arrowAngel)) + center.x, (r * sin(arrowAngel)) + center.y)
 
-//        paint.style = Paint.Style.FILL_AND_STROKE
-//        val path = Path()
-//        path.fillType = Path.FillType.EVEN_ODD;
-//        path.moveTo(center.x, center.y);
-//        path.lineTo(arrowEnd.x, arrowEnd.y);
-//        path.close();
-//        canvas.drawPath(path, paint);
-
-        canvas.drawArc(
+        universalDrawArc(
+            canvas,
             arrowEnd.x - halfWidth,
             arrowEnd.y - halfHeight,
             arrowEnd.x + halfWidth,
@@ -105,13 +98,24 @@ class Timer @JvmOverloads constructor(
         canvas.drawCircle(center.x, center.y, r / 10, paint)
         paint.color = Color.WHITE
         canvas.drawCircle(center.x, center.y, r / 25, paint)
-        //canvas.draw
     }
 
 
-    /**
-     * Set lasted milliseconds
-     */
+    private fun universalDrawArc(
+        canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, startAngle: Float,
+        sweepAngle: Float, useCenter: Boolean, paint: Paint
+    ) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            canvas.drawArc(
+                left, top, right, bottom, startAngle, sweepAngle, useCenter, paint
+            )
+        } else {
+            val rect = RectF(left, top, right, bottom)
+            canvas.drawArc(rect, startAngle, sweepAngle, useCenter, paint)
+        }
+    }
+
+    //  Set lasted milliseconds
     fun setCurrent(current: Long) {
         currentMs = current
         if (isFinished) {
@@ -120,9 +124,7 @@ class Timer @JvmOverloads constructor(
         invalidate()
     }
 
-    /**
-     * Set time period
-     */
+    // Set time period
     fun setPeriod(period: Long) {
         isFinished = false
         periodMs = period

@@ -1,8 +1,8 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
-enum class ProcessStatus  {
-    NOT_RUNNING,
-    RUNNING,
+enum class ProcessState  {
+    NOT_STARTED,
+    STARTED,
     STOPPED,
     FINISHED
 }

@@ -2,7 +2,7 @@ package com.korneysoft.multiplicationtable.fragments.study
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.korneysoft.multiplicationtable.domain.entities.ProcessStatus
+import com.korneysoft.multiplicationtable.domain.entities.ProcessState
 import com.korneysoft.multiplicationtable.domain.entities.StudyTime
 import com.korneysoft.multiplicationtable.domain.entities.Task
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetStudyListUseCase
@@ -31,7 +31,7 @@ class StudyViewModel @Inject constructor(
     val studyTaskList = mutableListOf<Task>()
     private var studyList = listOf<Task>()
     private var studyJob: Job? = null
-    var studyProcessState: ProcessStatus = ProcessStatus.NOT_RUNNING
+    var studyProcessState: ProcessState = ProcessState.NOT_STARTED
         private set
 
     private var _studyTaskStateFlow = MutableStateFlow<Int?>(null)
@@ -57,10 +57,10 @@ class StudyViewModel @Inject constructor(
 
     fun setProcessStatus(studyProcessMessage: Int) {
         studyProcessState = when (studyProcessMessage) {
-            STUDY_PROCESS_START -> ProcessStatus.RUNNING
-            STUDY_PROCESS_STOP -> ProcessStatus.STOPPED
-            STUDY_PROCESS_FINISH -> ProcessStatus.FINISHED
-            else -> ProcessStatus.NOT_RUNNING
+            STUDY_PROCESS_START -> ProcessState.STARTED
+            STUDY_PROCESS_STOP -> ProcessState.STOPPED
+            STUDY_PROCESS_FINISH -> ProcessState.FINISHED
+            else -> ProcessState.NOT_STARTED
         }
     }
 

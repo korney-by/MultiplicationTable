@@ -1,18 +1,18 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
 enum class Command {
-
     PROCESS_START,
     PROCESS_STOP,
     PROCESS_FINISH,
+    PROCESS_CHANGE_TASK,
 
     TASK_START,
     TASK_STOP,
     TASK_FINISH;
 
-    object Pair
-
-    fun getNewCommandPair(command: Command, value: Long?): Pair<Command, Long?> {
-        return Pair(command, value)
+    companion object {
+        fun getCommandPair(command: Command, value: Int?=null): Pair<Command, Int?> {
+            return Pair(command, value)
+        }
     }
 }

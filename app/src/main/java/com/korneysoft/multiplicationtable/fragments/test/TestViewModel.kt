@@ -3,8 +3,10 @@ package com.korneysoft.multiplicationtable.fragments.test
 import android.os.SystemClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.domain.entities.*
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetTestListUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRightUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TestViewModel @Inject constructor(
     private val playSoundUseCase: PlaySoundUseCase,
+    private val playRightUseCase: PlayRightUseCase,
     private val getTestListUseCase: GetTestListUseCase
 ) : ViewModel() {
 
@@ -28,18 +31,17 @@ class TestViewModel @Inject constructor(
     private var testList = listOf<Task>()
     private var testJob: Job? = null
 
-
-    var testProcessState: ProcessStatus = ProcessStatus.NOT_RUNNING
-        private set
-
-    private var _commandFlow = MutableSharedFlow<Pair<Command, Long?>>()
+    private var _commandFlow = MutableSharedFlow<Pair<Command, Int?>>()
     val commandFlow = _commandFlow.asSharedFlow()
 
-    private var _testTaskStateFlow = MutableStateFlow<Int?>(null)
-    val testTaskStateFlow = _testTaskStateFlow.asStateFlow()
-
     private var _testTimerStateFlow = MutableStateFlow<Long?>(null)
-    val testTimerStateFlow = _testTimerStateFlow.asStateFlow()
+    val timerStateFlow = _testTimerStateFlow.asStateFlow()
+
+    private var _processStateStateFlow = MutableStateFlow<ProcessState>(ProcessState.NOT_STARTED)
+    val processStateStateFlow = _processStateStateFlow.asStateFlow()
+
+    private var _taskStateStateFlow = MutableStateFlow<ProcessState>(ProcessState.NOT_STARTED)
+    val taskStateStateFlow = _taskStateStateFlow.asStateFlow()
 
 
     fun setNumberToTest(number: Int) {
@@ -47,16 +49,15 @@ class TestViewModel @Inject constructor(
         testList = getTestListUseCase.execute(number).shuffled()
     }
 
-    fun setProcessStatus(testProcessMessage: Int) {
-        testProcessState = when (testProcessMessage) {
-            TEST_PROCESS_START -> ProcessStatus.RUNNING
-            TEST_PROCESS_STOP -> ProcessStatus.STOPPED
-            TEST_PROCESS_FINISH -> ProcessStatus.FINISHED
-            else -> ProcessStatus.NOT_RUNNING
-        }
+    fun setProcessState(state: ProcessState) {
+        viewModelScope.launch { _processStateStateFlow.emit(state) }
     }
 
-    private fun getCurrentTestTask(): Task? {
+    fun setTaskState(state: ProcessState) {
+        viewModelScope.launch { _taskStateStateFlow.emit(state) }
+    }
+
+    fun getCurrentTask(): Task? {
         return getTestTask(currentTestTaskInd)
     }
 
@@ -73,8 +74,15 @@ class TestViewModel @Inject constructor(
         continueTestProcess()
     }
 
-    fun setAnswer(answer: Int) {
-        currAnswer = answer
+    fun setAnswer(answer: Int?) {
+        answer.let { currAnswer = answer }
+    }
+
+    fun isAnswerRight(): Boolean {
+        getCurrentTask()?.let {
+            return isAnswerRight(it)
+        }
+        return false
     }
 
     private fun isAnswerRight(task: Task): Boolean {
@@ -85,39 +93,47 @@ class TestViewModel @Inject constructor(
         if (testJob != null) return
         testJob = viewModelScope.launch {
             val startTaskNum = currentTestTaskInd + 1
-            _testTaskStateFlow.emit(TestViewModel.TEST_PROCESS_START)
+            _commandFlow.emit(Command.getCommandPair(Command.PROCESS_START))
             if (startTaskNum == 0) {
-//                //playAnsverUseCase.execute()
-                delay((TestTime.DELAY_FOR_START_MS).toLong())
+                //playAnswerUseCase.execute()
+                delay(TestTime.DELAY_FOR_START_MS)
             }
             for (i in startTaskNum..testList.size - 1) {
                 currentTestTaskInd = i
-                _testTaskStateFlow.emit(currentTestTaskInd)
-                startTaskTest(currentTestTaskInd)
+                _commandFlow.emit(Command.getCommandPair(Command.TASK_START, currentTestTaskInd))
+                runTaskTestTimer(currentTestTaskInd)
             }
-            _testTaskStateFlow.emit(TestViewModel.TEST_PROCESS_FINISH)
+            _commandFlow.emit(Command.getCommandPair(Command.PROCESS_FINISH))
             testJob = null
         }
     }
 
-    private suspend fun startTaskTest(taskIndex: Int) {
+    suspend fun runTaskTestTimer(taskIndex: Int) {
         val task = testList[taskIndex]
         var leftTime = ResponseTime.RESPONSE_TIME_MAX
         val startTimeMs = getCurrentTime()
         currAnswer = null
 
+        playSoundUseCase.execute(task.getId())
+        delay(playSoundUseCase.duration)
+
         while (leftTime > 0 && !isAnswerRight(task)) {
             delay(TestTime.INTERVAL_UPDATE_TIMER)
-
-            leftTime = getLeftTime(startTimeMs,ResponseTime.RESPONSE_TIME_MAX)
+            leftTime = getLeftTime(startTimeMs, ResponseTime.RESPONSE_TIME_MAX)
             _testTimerStateFlow.emit(leftTime)
-
         }
-        _testTimerStateFlow.emit(TEST_TASK_STOP)
-        playSoundUseCase.execute(task.getIdWithResult())
-        delay(playSoundUseCase.duration)
-        _testTimerStateFlow.emit(TEST_TASK_FINISH)
+        _commandFlow.emit(Command.getCommandPair(Command.TASK_STOP))
+
+        if (isAnswerRight(task)) {
+            playRightUseCase.execute()
+            delay(playRightUseCase.duration)
+        } else {
+            playSoundUseCase.execute(task.getIdWithResult())
+            delay(playSoundUseCase.duration)
+        }
+        _commandFlow.emit(Command.getCommandPair(Command.TASK_FINISH))
     }
+
 
     fun getLeftTime(startTimeMs: Long, leftTimeMs: Long): Long {
         return leftTimeMs - (getCurrentTime() - startTimeMs)
@@ -125,14 +141,5 @@ class TestViewModel @Inject constructor(
 
     fun getCurrentTime(): Long {
         return SystemClock.elapsedRealtime()
-    }
-
-    companion object {
-        const val TEST_PROCESS_START = Int.MIN_VALUE
-        const val TEST_PROCESS_STOP = Int.MAX_VALUE - 1
-        const val TEST_PROCESS_FINISH = Int.MAX_VALUE
-
-        const val TEST_TASK_FINISH = Long.MAX_VALUE
-        const val TEST_TASK_STOP = Long.MAX_VALUE - 1
     }
 }

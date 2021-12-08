@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
-import com.korneysoft.multiplicationtable.domain.entities.ProcessStatus
+import com.korneysoft.multiplicationtable.domain.entities.ProcessState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -62,36 +62,36 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
 
     private fun actionButtonStopRepeat() {
         when (viewModel.studyProcessState) {
-            ProcessStatus.RUNNING -> {
+            ProcessState.STARTED -> {
                 viewModel.stopStudyProcess()
             }
-            ProcessStatus.STOPPED -> {
+            ProcessState.STOPPED -> {
                 viewModel.continueStudyProcess()
             }
-            ProcessStatus.FINISHED -> {
+            ProcessState.FINISHED -> {
                 viewModel.startStudyProcess()
             }
-            ProcessStatus.NOT_RUNNING -> {}
+            ProcessState.NOT_STARTED -> {}
         }
     }
 
     private fun setVisibleButtons() {
-        val isNotRunned = (viewModel.studyProcessState == ProcessStatus.NOT_RUNNING)
+        val isNotRunned = (viewModel.studyProcessState == ProcessState.NOT_STARTED)
         binding.buttonStart.isVisible = isNotRunned
         binding.buttonStopRepeat.isVisible = !isNotRunned
         binding.textInstruction.isVisible = !isNotRunned
 
         when (viewModel.studyProcessState) {
-            ProcessStatus.RUNNING -> {
+            ProcessState.STARTED -> {
                 binding.buttonStopRepeat.text = getString(R.string.stop)
             }
-            ProcessStatus.STOPPED -> {
+            ProcessState.STOPPED -> {
                 binding.buttonStopRepeat.text = getString(R.string.proceed)
             }
-            ProcessStatus.FINISHED -> {
+            ProcessState.FINISHED -> {
                 binding.buttonStopRepeat.text = getString(R.string.repeat)
             }
-            ProcessStatus.NOT_RUNNING -> {}
+            ProcessState.NOT_STARTED -> {}
         }
     }
 

@@ -2,11 +2,11 @@ package com.korneysoft.multiplicationtable.domain.entities
 
 object ResponseTime {
     // time for response in seconds
-    const val RESPONSE_TIME_GOOD_STUDIED = 2000L
-    const val RESPONSE_TIME_MIDDLE_STUDIED = 4000L
-    const val RESPONSE_TIME_POORLY_STUDIED = 60000L
-    const val RESPONSE_TIME_NOT_STUDIED = 8000L
-    const val RESPONSE_TIME_MAX = 10000L
+    const val RESPONSE_TIME_GOOD_STUDIED = 3000L
+    const val RESPONSE_TIME_MIDDLE_STUDIED = 6000L
+    const val RESPONSE_TIME_POORLY_STUDIED = 90000L
+    const val RESPONSE_TIME_NOT_STUDIED = 12000L
+    const val RESPONSE_TIME_MAX = 15000L
 
     fun getFromTaskStatus(status: TaskStatus): Long {
         return when (status) {
