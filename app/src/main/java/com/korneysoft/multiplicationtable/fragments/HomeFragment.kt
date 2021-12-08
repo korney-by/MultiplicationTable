@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
 
 private const val TAG = "T7-HomeFragment"
 
@@ -32,6 +33,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.buttonSettings.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
         }
+
+        binding.buttonExit.setOnClickListener {
+            exitProcess(-1)
+        }
+
     }
 
 

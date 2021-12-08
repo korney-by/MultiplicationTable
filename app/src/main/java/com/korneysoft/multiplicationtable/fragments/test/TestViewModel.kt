@@ -3,8 +3,8 @@ package com.korneysoft.multiplicationtable.fragments.test
 import android.os.SystemClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.domain.entities.*
+import com.korneysoft.multiplicationtable.domain.usecases.rating.SetBetterRatingUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetTestListUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRightUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
@@ -22,7 +22,8 @@ import javax.inject.Inject
 class TestViewModel @Inject constructor(
     private val playSoundUseCase: PlaySoundUseCase,
     private val playRightUseCase: PlayRightUseCase,
-    private val getTestListUseCase: GetTestListUseCase
+    private val getTestListUseCase: GetTestListUseCase,
+    private val setBetterRatingUseCase: SetBetterRatingUseCase
 ) : ViewModel() {
 
     private var currentTestTaskInd: Int = -1
@@ -101,21 +102,22 @@ class TestViewModel @Inject constructor(
             for (i in startTaskNum..testList.size - 1) {
                 currentTestTaskInd = i
                 _commandFlow.emit(Command.getCommandPair(Command.TASK_START, currentTestTaskInd))
-                runTaskTestTimer(currentTestTaskInd)
+                runTaskTimer(currentTestTaskInd)
             }
             _commandFlow.emit(Command.getCommandPair(Command.PROCESS_FINISH))
             testJob = null
         }
     }
 
-    suspend fun runTaskTestTimer(taskIndex: Int) {
+    suspend fun runTaskTimer(taskIndex: Int) {
         val task = testList[taskIndex]
         var leftTime = ResponseTime.RESPONSE_TIME_MAX
-        val startTimeMs = getCurrentTime()
-        currAnswer = null
+        _testTimerStateFlow.emit(leftTime)
 
+        currAnswer = null
         playSoundUseCase.execute(task.getId())
-        delay(playSoundUseCase.duration)
+        //delay(playSoundUseCase.duration)
+        val startTimeMs = getCurrentTime()
 
         while (leftTime > 0 && !isAnswerRight(task)) {
             delay(TestTime.INTERVAL_UPDATE_TIMER)
@@ -125,6 +127,7 @@ class TestViewModel @Inject constructor(
         _commandFlow.emit(Command.getCommandPair(Command.TASK_STOP))
 
         if (isAnswerRight(task)) {
+            setBetterRatingUseCase.execute(task, getCurrentTime() - startTimeMs)
             playRightUseCase.execute()
             delay(playRightUseCase.duration)
         } else {

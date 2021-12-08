@@ -10,8 +10,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.FragmentTestBinding
@@ -22,8 +24,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
-class TestFragment : Fragment(R.layout.fragment_test) {
+class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
     private val viewModel by viewModels<TestViewModel>()
 
     private lateinit var binding: FragmentTestBinding
@@ -38,14 +41,23 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         }
 
         setListenersForEnter()
-
-        binding.customViewTimer.setPeriod(ResponseTime.RESPONSE_TIME_MAX)
         binding.textAction.text = args.subTitleFragment
-        launchCollectCommands()
-        launchCollectTimer()
-        launchCollectTaskState()
-        launchCollectProcessState()
+
+        observeCommands()
+        observeTaskState()
+        observeTimer()
+        observeProcessState()
         viewModel.startTestProcess()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    override fun onPause() {
+        //hideKeyboard(binding.editTextAnswer)
+        super.onPause()
     }
 
     private fun setListenersForEnter() {
@@ -67,7 +79,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         }
     }
 
-    private fun launchCollectCommands() {
+    private fun observeCommands() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.commandFlow.collect {
@@ -80,13 +92,11 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                         }
                         Command.PROCESS_FINISH -> {
                             viewModel.setProcessState(ProcessState.FINISHED)
+                            findNavController().popBackStack()
                         }
 
                         Command.TASK_START -> {
                             viewModel.setTaskState(ProcessState.STARTED)
-                            it.second?.let { numberTask ->
-                                binding.editTextAnswer.text.clear()
-                            }
                         }
                         Command.TASK_STOP -> {
                             viewModel.setTaskState(ProcessState.STOPPED)
@@ -100,30 +110,35 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         }
     }
 
-    private fun launchCollectTimer() {
+    private fun observeTimer() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.timerStateFlow.collect { time ->
-                time?.let { binding.customViewTimer.setCurrent(time) }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.timerStateFlow.collect { time ->
+                    time?.let { binding.customViewTimer.setCurrent(time) }
+                }
             }
         }
     }
 
-    private fun launchCollectTaskState() {
+    private fun observeTaskState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.taskStateStateFlow.collect {
-                showCurrentTaskState(it)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.taskStateStateFlow.collect {
+                    showCurrentTaskState(it)
+                }
             }
         }
     }
 
-    private fun launchCollectProcessState() {
+    private fun observeProcessState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.processStateStateFlow.collect {
-                showCurrentProcessState(it)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.processStateStateFlow.collect {
+                    showCurrentProcessState(it)
+                }
             }
         }
     }
-
 
     private fun showCurrentProcessState(state: ProcessState) {
 
@@ -132,25 +147,43 @@ class TestFragment : Fragment(R.layout.fragment_test) {
     private fun showCurrentTaskState(state: ProcessState) {
         when (state) {
             ProcessState.STARTED -> {
+                binding.customViewTimer.setPeriod(ResponseTime.RESPONSE_TIME_MAX)
                 binding.textTask.text = viewModel.getCurrentTask().toString()
                 binding.textTask.isVisible = true
                 binding.editTextAnswer.isVisible = true
                 binding.editTextAnswer.requestFocus()
-                showKeyboard(binding.editTextAnswer)
+                showKeyboardForce(binding.editTextAnswer)
             }
-            ProcessState.STOPPED, ProcessState.FINISHED -> {
+            ProcessState.STOPPED, ProcessState.FINISHED   -> {
+                showKeyboardNormal(binding.editTextAnswer)
                 binding.editTextAnswer.isVisible = false
+                binding.editTextAnswer.text.clear()
                 binding.textTask.text = viewModel.getCurrentTask()?.toStringWithResult()
             }
         }
     }
 
-    private fun showKeyboard(textView: TextView) {
-        context?.let {
+    private fun showKeyboardForce(textView: TextView) {
+        activity?.let {
+            val imm: InputMethodManager =
+                it.applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(textView, InputMethodManager.SHOW_FORCED);
+        }
+    }
+
+    private fun hideKeyboard(textView: TextView) {
+        activity?.let {
             val imm: InputMethodManager =
                 it.applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(textView.getWindowToken(), 0)
-            imm.showSoftInput(textView, 0);
+        }
+    }
+
+    private fun showKeyboardNormal(textView: TextView) {
+        activity?.let {
+            val imm: InputMethodManager =
+                it.applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(textView, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 

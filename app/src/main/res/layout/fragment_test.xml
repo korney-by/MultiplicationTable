@@ -8,8 +8,8 @@
 
     <com.korneysoft.multiplicationtable.customview.Timer
         android:id="@+id/custom_view_timer"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         app:custom_color="?attr/colorPrimary"
         app:custom_style="fill"
         app:layout_constraintBottom_toTopOf="@+id/text_task"
@@ -34,7 +34,7 @@
         android:id="@+id/text_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="36sp"
+        android:textSize="40sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/button_ok"
         app:layout_constraintEnd_toStartOf="@+id/edit_text_answer"
@@ -42,8 +42,8 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/custom_view_timer"
-        tools:visibility="visible"
-        tools:text="2 • 2 = " />
+        tools:text="2 • 2 = "
+        tools:visibility="visible" />
 
 
     <EditText
@@ -52,25 +52,26 @@
         android:layout_height="wrap_content"
         android:autofillHints="@null"
         android:inputType="number"
-        android:textSize="36sp"
         android:maxLength="2"
+        android:textSize="40sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/text_task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/text_task"
         app:layout_constraintTop_toTopOf="@+id/text_task"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/button_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="150dp"
+        android:minWidth="200dp"
         android:text="@string/button_ok"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_action" />
+        app:layout_constraintTop_toBottomOf="@+id/text_task" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,28 +1,29 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
 object TaskList {
-    private const val START_NUMBER = 2
-    private const val FINISH_NUMBER = 9
+    const val START_NUMBER = 2
+    const val FINISH_NUMBER = 9
     private const val SIGN_MULTIPLICATION = 'x'
 
-    private val tasks = mutableListOf<Task>()
+    private val _tasks = mutableListOf<Task>()
+    val tasks: List<Task> = _tasks
 
     init {
-        fillTasks()
+        buildTasks()
     }
 
-    private fun fillTasks() {
+    private fun buildTasks() {
         for (i in START_NUMBER..FINISH_NUMBER) {
             for (j in START_NUMBER..FINISH_NUMBER) {
                 val task = Task(i, j, i * j, SIGN_MULTIPLICATION)
-                tasks.add(task)
+                _tasks.add(task)
             }
         }
     }
 
-    fun getStudyTasksAllTable(): List<Task> {
+    fun getStudyAllUniqueTasks(): List<Task> {
         val tasksOfNumber = mutableListOf<Task>()
-        tasks.forEach {
+        _tasks.forEach {
             if (it.parameter1 <= it.parameter2) {
                 tasksOfNumber.add(it)
             }
@@ -32,7 +33,7 @@ object TaskList {
 
     fun getStudyTasksOnNumber(number: Int): List<Task> {
         val tasksOfNumber = mutableListOf<Task>()
-        tasks.forEach {
+        _tasks.forEach {
             if (it.parameter1 == number) {
                 tasksOfNumber.add(it)
             }

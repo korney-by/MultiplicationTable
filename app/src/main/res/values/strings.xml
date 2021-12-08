@@ -33,5 +33,6 @@
     <string name="stop">Stop</string>
     <string name="proceed">Proceed</string>
     <string name="button_ok">Ok</string>
+    <string name="exit">Exit</string>
 
 </resources>

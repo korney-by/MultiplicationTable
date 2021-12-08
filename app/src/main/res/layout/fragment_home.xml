@@ -9,32 +9,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
         <Button
             android:id="@+id/button_study"
+            style="@style/ButtonStyle"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_study" />
 
         <Button
             android:id="@+id/button_check"
+            style="@style/ButtonStyle"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_check" />
 
         <Button
             android:id="@+id/button_progress"
+            style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_progress" />
 
         <Button
             android:id="@+id/button_settings"
+            style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="@string/button_settings" />
+
+        <Button
+            android:id="@+id/button_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

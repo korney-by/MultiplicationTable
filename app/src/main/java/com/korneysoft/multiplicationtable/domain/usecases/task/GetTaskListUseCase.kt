@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetTaskListUseCase @Inject constructor() {
     fun execute(number: Int): List<Task> {
         return if (number == StudyNumber.ALL_TABLE) {
-            TaskList.getStudyTasksAllTable()
+            TaskList.getStudyAllUniqueTasks()
         } else {
             TaskList.getStudyTasksOnNumber(number)
         }
