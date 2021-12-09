@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.korneysoft.multiplicationtable.domain.entities.*
 import com.korneysoft.multiplicationtable.domain.usecases.rating.SetBetterRatingUseCase
-import com.korneysoft.multiplicationtable.domain.usecases.properties.SaveStatisticUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.statistic.SaveStatisticUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetTestListUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRightUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase

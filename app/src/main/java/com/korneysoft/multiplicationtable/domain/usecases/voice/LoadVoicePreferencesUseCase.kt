@@ -1,10 +1,10 @@
-package com.korneysoft.multiplicationtable.domain.usecases.properties
+package com.korneysoft.multiplicationtable.domain.usecases.voice
 
 import com.korneysoft.multiplicationtable.application.AppPreferences
 import com.korneysoft.multiplicationtable.domain.data.RatingRepository
 import javax.inject.Inject
 
-class LoadVoicePropertiesUseCase @Inject constructor(
+class LoadVoicePreferencesUseCase @Inject constructor(
     private val appPreferences: AppPreferences
 ) {
     operator fun invoke() {

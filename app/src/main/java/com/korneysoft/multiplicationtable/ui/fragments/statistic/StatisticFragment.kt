@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.FragmentStatiscicBinding
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,8 +27,11 @@ class StatisticFragment : Fragment(R.layout.fragment_statiscic) {
             GridLayoutManager(context, viewModel.columnCount)
         binding.statisticTableRecyclerView.adapter = statisticTableAdapter
 
+        binding.buttonClearStatistic.setOnClickListener {
+            viewModel.clearStatistic()
+            statisticTableAdapter.submitList(viewModel.statisticList)
+        }
+
         statisticTableAdapter.submitList(viewModel.statisticList)
-
-
     }
 }

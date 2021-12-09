@@ -4,16 +4,10 @@
     android:thickness="0dp"
     android:shape="rectangle">
     <stroke android:width="0.1mm"
-        android:color="#4799E8"/>
+        android:color="#888888"/>
     <gradient
-        android:angle="270"
-        android:endColor="#FFFF99"
+        android:endColor="#FFFF55"
         android:gradientRadius="40dp"
-        android:startColor="#FFFFFF"
+        android:startColor="#FFFFEE"
         android:type="radial" />
-<!--    <gradient-->
-<!--        android:startColor="#FFFF99"-->
-<!--        android:endColor="#FFFFFF"-->
-<!--        android:type="linear"-->
-<!--        android:angle="270"/>-->
 </shape>

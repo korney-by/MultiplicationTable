@@ -36,5 +36,6 @@
     <string name="exit">Exit</string>
     <string name="my_progress">My successes</string>
     <string name="key_statistic" translatable="false">statistic</string>
+    <string name="clear_statistic">Clear statistic</string>
 
 </resources>

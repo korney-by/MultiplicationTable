@@ -30,13 +30,21 @@ class StatisticTableAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskWithRating: TaskWithRating) {
-            binding.textValue.text = taskWithRating.result.toString()
+            var backgroundId: Int = 0
 
-            val backgroundId= when (taskWithRating.rating){
-                TaskRating.NOT_STUDIED ->  R.drawable.cell_of_table_gray
-                TaskRating.POORLY_STUDIED ->  R.drawable.cell_of_table_red
-                TaskRating.MIDDLE_STUDIED ->  R.drawable.cell_of_table_yellow
-                TaskRating.GOOD_STUDIED ->  R.drawable.cell_of_table_green
+            if (taskWithRating.id.isEmpty()) {
+                backgroundId=R.drawable.cell_of_table_blue
+                if (taskWithRating.result!=0){
+                    binding.textValue.text = taskWithRating.result.toString()
+                }
+            } else {
+                binding.textValue.text = taskWithRating.result.toString()
+                backgroundId = when (taskWithRating.rating) {
+                    TaskRating.NOT_STUDIED -> R.drawable.cell_of_table_gray
+                    TaskRating.POORLY_STUDIED -> R.drawable.cell_of_table_red
+                    TaskRating.MIDDLE_STUDIED -> R.drawable.cell_of_table_yellow
+                    TaskRating.GOOD_STUDIED -> R.drawable.cell_of_table_green
+                }
             }
             binding.viewCell.setBackgroundResource(backgroundId)
         }

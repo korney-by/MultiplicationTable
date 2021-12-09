@@ -22,7 +22,7 @@ class AppPreferences @Inject constructor(
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val statisticKey: String get() = context.getString(R.string.key_statistic)
 
-        fun loadSoundRepositorySettings() {
+    fun loadSoundRepositorySettings() {
         val currVoice = preferences.getString(
             context.getString(R.string.key_voice),
             soundRepository.defaultVoice
@@ -42,6 +42,7 @@ class AppPreferences @Inject constructor(
 
     fun readStatistic(): List<TaskWithRating> {
         val statisticList = getStatisticListUseCase()
+
         for (i in statisticList.indices) {
             val taskWithRating = statisticList[i]
             val ratingName = preferences.getString(
@@ -55,8 +56,8 @@ class AppPreferences @Inject constructor(
         return statisticList
     }
 
-    fun saveStatistic(): Boolean {
-        val statisticList = getStatisticListUseCase()
+    fun saveStatistic(inputStatisticList: List<TaskWithRating>? = null): Boolean {
+        val statisticList = inputStatisticList ?: getStatisticListUseCase()
         val editor: SharedPreferences.Editor = preferences.edit()
 
         for (i in statisticList.indices) {

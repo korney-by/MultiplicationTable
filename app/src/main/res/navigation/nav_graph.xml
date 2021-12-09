@@ -75,6 +75,6 @@
     <fragment
         android:id="@+id/statisticFragment"
         android:name="com.korneysoft.multiplicationtable.ui.fragments.statistic.StatisticFragment"
-        android:label="StatisticFragment" />
+        android:label="@string/app_name" />
 
 </navigation>
