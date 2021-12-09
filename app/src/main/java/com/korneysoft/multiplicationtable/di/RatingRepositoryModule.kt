@@ -1,7 +1,7 @@
 package com.korneysoft.multiplicationtable.di
 
 import com.korneysoft.multiplicationtable.domain.data.RatingRepository
-import com.korneysoft.multiplicationtable.domain.data.RatingRepositoryImpl
+import com.korneysoft.multiplicationtable.domain.data.implementation.RatingRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

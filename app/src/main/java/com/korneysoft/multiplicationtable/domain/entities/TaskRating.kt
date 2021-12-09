@@ -1,6 +1,6 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
-enum class TaskRating {
+enum class TaskRating  {
     NOT_STUDIED,
     POORLY_STUDIED,
     MIDDLE_STUDIED,
@@ -10,9 +10,9 @@ enum class TaskRating {
         get() {
             return when (this) {
                 NOT_STUDIED -> 0
-                POORLY_STUDIED -> 1
-                MIDDLE_STUDIED -> 2
-                GOOD_STUDIED -> 3
+                POORLY_STUDIED -> 10
+                MIDDLE_STUDIED -> 20
+                GOOD_STUDIED -> 30
             }
         }
 

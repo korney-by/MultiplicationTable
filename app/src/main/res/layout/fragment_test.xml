@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.test.TestFragment">
+    tools:context=".ui.fragments.test.TestFragment">
 
-    <com.korneysoft.multiplicationtable.customview.Timer
+    <com.korneysoft.multiplicationtable.ui.customview.Timer
         android:id="@+id/custom_view_timer"
         android:layout_width="180dp"
         android:layout_height="180dp"

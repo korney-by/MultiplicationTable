@@ -5,13 +5,13 @@ data class Task(
     val parameter2: Int,
     val result: Int,
     val signOperation: Char,
-    var rating: TaskRating = TaskRating.NOT_STUDIED
+    //var rating: TaskRating = TaskRating.NOT_STUDIED
 ) {
     fun getId(): String {
         return if (parameter1 <= parameter2) {
-            "${parameter1}x$parameter2"
+            "${parameter1}$signOperation$parameter2"
         } else {
-            "${parameter2}x$parameter1"
+            "${parameter2}$signOperation$parameter1"
         }
     }
 
