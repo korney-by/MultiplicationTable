@@ -9,13 +9,13 @@ enum class TaskRating(val value: Int)  {
     companion object {
         fun getRatingFromResponseTime(responseTimeInMs: Long): TaskRating {
             return when {
-                (responseTimeInMs >= ResponseTime.RESPONSE_TIME_POORLY_STUDIED) -> {
-                    NOT_STUDIED
-                }
-                (responseTimeInMs >= ResponseTime.RESPONSE_TIME_MIDDLE_STUDIED) -> {
+                (responseTimeInMs > ResponseTime.RESPONSE_TIME_POORLY_STUDIED) -> {
                     POORLY_STUDIED
                 }
-                (responseTimeInMs >= ResponseTime.RESPONSE_TIME_GOOD_STUDIED) -> {
+                (responseTimeInMs > ResponseTime.RESPONSE_TIME_MIDDLE_STUDIED) -> {
+                    POORLY_STUDIED
+                }
+                (responseTimeInMs > ResponseTime.RESPONSE_TIME_GOOD_STUDIED) -> {
                     MIDDLE_STUDIED
                 }
                 else -> {

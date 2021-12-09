@@ -15,7 +15,7 @@ class StatisticViewModel @Inject constructor(
     private val getStartNumberUseCase: GetStartNumberUseCase,
     private val getFinishNumberUseCase: GetFinishNumberUseCase,
     private val getStatisticListUseCase: GetStatisticListUseCase,
-    private val clearStatisticUseCase: ClearStatisticUseCase
+    private val clearStatisticUseCase: ClearStatisticUseCase,
 ) : ViewModel() {
 
     val columnCount: Int get() = getFinishNumberUseCase() - getStartNumberUseCase() + 2
@@ -26,12 +26,26 @@ class StatisticViewModel @Inject constructor(
         val statList = getStatisticListUseCase()
 
         for (i in 0 until columnCount) {
-            val taskWithRating = TaskWithRating("", 0, 0, i, TaskRating.NOT_STUDIED)
+            val title = i + 1
+            val taskWithRating = TaskWithRating(
+                "",
+                0,
+                0,
+                if (title >= getStartNumberUseCase()) title else 0,
+                TaskRating.NOT_STUDIED
+            )
             newList.add(taskWithRating)
         }
         for (i in statList.indices) {
             if ((i % (columnCount - 1)) == 0) {
-                val taskWithRating = TaskWithRating("", 0, 0, i / 8 + 1, TaskRating.NOT_STUDIED)
+                val title = i / 8 + 2
+                val taskWithRating = TaskWithRating(
+                    "",
+                    0,
+                    0,
+                    if (title >= getStartNumberUseCase()) title else 0,
+                    TaskRating.NOT_STUDIED
+                )
                 newList.add(taskWithRating)
             }
             newList.add(statList[i])

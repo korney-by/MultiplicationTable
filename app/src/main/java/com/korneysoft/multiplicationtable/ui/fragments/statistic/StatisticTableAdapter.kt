@@ -33,8 +33,8 @@ class StatisticTableAdapter :
             var backgroundId: Int = 0
 
             if (taskWithRating.id.isEmpty()) {
-                backgroundId=R.drawable.cell_of_table_blue
-                if (taskWithRating.result!=0){
+                backgroundId = R.drawable.cell_of_table_blue
+                if (taskWithRating.result > 0) {
                     binding.textValue.text = taskWithRating.result.toString()
                 }
             } else {
