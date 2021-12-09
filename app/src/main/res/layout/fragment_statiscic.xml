@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_statistic_table"
+        android:id="@+id/statistic_table_recycler_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

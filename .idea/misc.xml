@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/drawable/cell_of_table.xml" value="0.29010416666666666" />
+        <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/drawable/cell_of_table_gray.xml" value="0.18072916666666666" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/drawable/cell_of_table_green.xml" value="0.29010416666666666" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/drawable/cell_of_table_red.xml" value="0.29010416666666666" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/drawable/cell_of_table_yellow.xml" value="0.25" />
@@ -11,7 +12,7 @@
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/activity_main.xml" value="0.35572916666666665" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/fragment_home.xml" value="0.33229166666666665" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/fragment_select.xml" value="0.25" />
-        <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/fragment_statiscic.xml" value="0.25729166666666664" />
+        <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/fragment_statiscic.xml" value="0.16" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/fragment_study.xml" value="0.31186868686868685" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/fragment_test.xml" value="0.33" />
         <entry key="..\:/Work/ANDROID/_RS_School/-TASKS/Multiplication-table/app/src/main/res/layout/statistic_item.xml" value="0.31666666666666665" />

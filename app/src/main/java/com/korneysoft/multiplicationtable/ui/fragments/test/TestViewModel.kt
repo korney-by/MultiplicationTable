@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.korneysoft.multiplicationtable.domain.entities.*
 import com.korneysoft.multiplicationtable.domain.usecases.rating.SetBetterRatingUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.properties.SaveStatisticUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetTestListUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRightUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
@@ -26,7 +27,8 @@ class TestViewModel @Inject constructor(
     private val playSoundUseCase: PlaySoundUseCase,
     private val playRightUseCase: PlayRightUseCase,
     private val getTestListUseCase: GetTestListUseCase,
-    private val setBetterRatingUseCase: SetBetterRatingUseCase
+    private val setBetterRatingUseCase: SetBetterRatingUseCase,
+    private val saveStatisticUseCase: SaveStatisticUseCase
 ) : ViewModel() {
 
     private var currentTestTaskInd: Int = -1
@@ -49,8 +51,8 @@ class TestViewModel @Inject constructor(
 
 
     fun setNumberToTest(number: Int) {
-        //playTestByNumUseCase.execute(number)
-        testList = getTestListUseCase.execute(number).shuffled()
+        //playTestByNumUseCase(number)
+        testList = getTestListUseCase(number).shuffled()
     }
 
     fun setProcessState(state: ProcessState) {
@@ -99,7 +101,7 @@ class TestViewModel @Inject constructor(
             val startTaskNum = currentTestTaskInd + 1
             _commandFlow.emit(Command.getCommandPair(Command.PROCESS_START))
             if (startTaskNum == 0) {
-                //playAnswerUseCase.execute()
+                //playAnswerUseCase()
                 delay(TestTime.DELAY_FOR_START_MS)
             }
             for (i in startTaskNum..testList.size - 1) {
@@ -118,7 +120,7 @@ class TestViewModel @Inject constructor(
         _testTimerStateFlow.emit(leftTime)
 
         currAnswer = null
-        playSoundUseCase.execute(task.getId())
+        playSoundUseCase(task.getId())
         //delay(playSoundUseCase.duration)
         val startTimeMs = getCurrentTime()
 
@@ -130,11 +132,11 @@ class TestViewModel @Inject constructor(
         _commandFlow.emit(Command.getCommandPair(Command.TASK_STOP))
 
         if (isAnswerRight(task)) {
-            setBetterRatingUseCase.execute(task, getCurrentTime() - startTimeMs)
-            playRightUseCase.execute()
+            setBetterRatingUseCase(task, getCurrentTime() - startTimeMs)
+            playRightUseCase()
             delay(playRightUseCase.duration)
         } else {
-            playSoundUseCase.execute(task.getIdWithResult())
+            playSoundUseCase(task.getIdWithResult())
             delay(playSoundUseCase.duration)
         }
         _commandFlow.emit(Command.getCommandPair(Command.TASK_FINISH))
@@ -147,5 +149,11 @@ class TestViewModel @Inject constructor(
 
     fun getCurrentTime(): Long {
         return SystemClock.elapsedRealtime()
+    }
+
+    fun saveStatistic(){
+        viewModelScope.launch {
+            saveStatisticUseCase()
+        }
     }
 }

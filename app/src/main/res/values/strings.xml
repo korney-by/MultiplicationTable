@@ -35,5 +35,6 @@
     <string name="button_ok">Ok</string>
     <string name="exit">Exit</string>
     <string name="my_progress">My successes</string>
+    <string name="key_statistic" translatable="false">statistic</string>
 
 </resources>

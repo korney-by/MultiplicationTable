@@ -4,7 +4,7 @@ import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import javax.inject.Inject
 
 class GetVoiceUseCase @Inject constructor(private val soundRepository: SoundRepository){
-    fun execute():String {
+    operator fun invoke():String {
         return soundRepository.voiceName
     }
 }

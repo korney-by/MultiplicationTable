@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.StatisticItemBinding
-import com.korneysoft.multiplicationtable.domain.entities.Task
+import com.korneysoft.multiplicationtable.domain.entities.TaskRating
+import com.korneysoft.multiplicationtable.domain.usecases.statistic.TaskWithRating
 
 class StatisticTableAdapter :
-    ListAdapter<Task, StatisticTableAdapter.StatisticTableHolder>(itemComparator) {
+    ListAdapter<TaskWithRating, StatisticTableAdapter.StatisticTableHolder>(itemComparator) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticTableHolder {
@@ -19,26 +21,41 @@ class StatisticTableAdapter :
     }
 
     override fun onBindViewHolder(holder: StatisticTableHolder, position: Int) {
-        val task = getItem(position)
-        holder.bind(task)
+        val taskWithRating = getItem(position)
+        holder.bind(taskWithRating)
     }
 
     inner class StatisticTableHolder(
         private val binding: StatisticItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task: Task) {
+        fun bind(taskWithRating: TaskWithRating) {
+            binding.textValue.text = taskWithRating.result.toString()
+
+            val backgroundId= when (taskWithRating.rating){
+                TaskRating.NOT_STUDIED ->  R.drawable.cell_of_table_gray
+                TaskRating.POORLY_STUDIED ->  R.drawable.cell_of_table_red
+                TaskRating.MIDDLE_STUDIED ->  R.drawable.cell_of_table_yellow
+                TaskRating.GOOD_STUDIED ->  R.drawable.cell_of_table_green
+            }
+            binding.viewCell.setBackgroundResource(backgroundId)
         }
     }
 
     private companion object {
 
-        private val itemComparator = object : DiffUtil.ItemCallback<Task>() {
-            override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-                return oldItem.getId()==newItem.getId()
+        private val itemComparator = object : DiffUtil.ItemCallback<TaskWithRating>() {
+            override fun areItemsTheSame(
+                oldItem: TaskWithRating,
+                newItem: TaskWithRating
+            ): Boolean {
+                return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+            override fun areContentsTheSame(
+                oldItem: TaskWithRating,
+                newItem: TaskWithRating
+            ): Boolean {
                 return oldItem.equals(newItem)
             }
 

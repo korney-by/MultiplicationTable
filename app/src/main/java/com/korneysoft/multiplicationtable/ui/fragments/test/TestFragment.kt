@@ -56,8 +56,9 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
     }
 
     override fun onPause() {
-        //hideKeyboard(binding.editTextAnswer)
+        hideKeyboard(binding.editTextAnswer)
         super.onPause()
+        viewModel.saveStatistic()
     }
 
     private fun setListenersForEnter() {

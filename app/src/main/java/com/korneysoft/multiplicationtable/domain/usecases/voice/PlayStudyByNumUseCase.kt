@@ -9,7 +9,7 @@ class PlayStudyByNumUseCase @Inject constructor(private val soundRepository: Sou
     var duration = 0L
         private set
 
-    fun execute(number: Int) {
+    operator fun invoke(number: Int) {
         val fileDescriptor =
             soundRepository.getSoundFileDescriptor(soundRepository.getStudyBySoundFileId(number))
         fileDescriptor?.let {

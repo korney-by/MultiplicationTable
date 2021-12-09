@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class SetBetterRatingUseCase @Inject constructor(private val ratingRepository: RatingRepository) {
 
-    fun execute(task: Task, timeMs: Long) {
+    operator fun invoke(task: Task, timeMs: Long) {
         val rating = TaskRating.getRatingFromResponseTime(timeMs)
         ratingRepository.setBetterRating(task, rating)
     }

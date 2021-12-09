@@ -1,10 +1,11 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
 import com.korneysoft.multiplicationtable.domain.data.TaskList
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TaskListImpl : TaskList {
+class TaskListImpl @Inject constructor(): TaskList {
     override val START_NUMBER = _START_NUMBER
     override val FINISH_NUMBER = _FINISH_NUMBER
 

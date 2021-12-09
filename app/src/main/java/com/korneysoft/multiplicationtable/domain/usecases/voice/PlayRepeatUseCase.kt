@@ -9,7 +9,7 @@ class PlayRepeatUseCase @Inject constructor(private val soundRepository: SoundRe
     var duration = 0L
         private set
 
-    fun execute() {
+    operator fun invoke() {
         val fileDescriptor =
             soundRepository.getSoundFileDescriptor(soundRepository.repeatSoundFileId)
         fileDescriptor?.let {

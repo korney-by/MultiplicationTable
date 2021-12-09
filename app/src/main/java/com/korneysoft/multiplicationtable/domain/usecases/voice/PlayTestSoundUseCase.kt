@@ -10,8 +10,8 @@ class PlayTestSoundUseCase @Inject constructor(
     var duration = 0L
         private set
 
-    fun execute() {
-        playSoundUseCase.execute(soundRepository.testSoundFileId)
+    operator fun invoke() {
+        playSoundUseCase(soundRepository.testSoundFileId)
         duration = playSoundUseCase.duration
     }
 }

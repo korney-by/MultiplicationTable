@@ -23,34 +23,34 @@ class SettingsViewModel @Inject constructor(
     private val getVoiceUseCase: GetVoiceUseCase
 ) : ViewModel() {
 
-    val voices: List<String> get() = getVoicesUseCase.execute()
-    //val defaultVoice get() = getDefaultVoiceUseCase.execute()
-    val voice get() = getVoiceUseCase.execute()
-    val VOICE_SPEED_MAX get() = getVoiceSpeedMaxUseCase.execute()
-    val VOICE_SPEED_MIN get() = getVoiceSpeedMinUseCase.execute()
+    val voices: List<String> get() = getVoicesUseCase()
+    //val defaultVoice get() = getDefaultVoiceUseCase()
+    val voice get() = getVoiceUseCase()
+    val VOICE_SPEED_MAX get() = getVoiceSpeedMaxUseCase()
+    val VOICE_SPEED_MIN get() = getVoiceSpeedMinUseCase()
 
-    private val _voiceSpeedStateFlow = MutableStateFlow<Int>(getVoiceSpeedUseCase.execute())
+    private val _voiceSpeedStateFlow = MutableStateFlow<Int>(getVoiceSpeedUseCase())
     val voiceSpeedStateFlow = _voiceSpeedStateFlow.asStateFlow()
 
     private fun lunchEmitVoiceSpeedStateFlow() {
         viewModelScope.launch {
-            _voiceSpeedStateFlow.emit(getVoiceSpeedUseCase.execute())
+            _voiceSpeedStateFlow.emit(getVoiceSpeedUseCase())
         }
     }
 
     fun setVoice(voice: String) {
-        setVoiceUseCase.execute(voice)
+        setVoiceUseCase(voice)
         playTestSound()
     }
 
     fun setVoiceSpeed(speed: Int) {
-        setVoiceSpeedUseCase.execute(speed)
+        setVoiceSpeedUseCase(speed)
         playTestSound()
         lunchEmitVoiceSpeedStateFlow()
     }
 
     fun playTestSound() {
-        playTestSoundUseCase.execute()
+        playTestSoundUseCase()
     }
 
 }

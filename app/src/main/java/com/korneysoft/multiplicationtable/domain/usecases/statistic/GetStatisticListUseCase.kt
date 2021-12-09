@@ -13,6 +13,7 @@ class GetStatisticListUseCase @Inject constructor(
         val list = mutableListOf<TaskWithRating>()
         taskList.tasks.forEach {
             val taskWithRating = TaskWithRating(
+                it.getId(),
                 it.parameter1,
                 it.parameter2,
                 it.result,

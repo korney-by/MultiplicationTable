@@ -8,11 +8,11 @@ class GetStudyListUseCase @Inject constructor(
     private val getTaskListUseCase: GetTaskListUseCase
 ) {
 
-    fun execute(number: Int): List<Task> {
+    operator fun invoke(number: Int): List<Task> {
                 return if (number == StudyNumber.ALL_TABLE) {
-            getTaskListUseCase.execute(number).shuffled()
+            getTaskListUseCase(number).shuffled()
         } else {
-            getTaskListUseCase.execute(number)
+            getTaskListUseCase(number)
         }
     }
 }

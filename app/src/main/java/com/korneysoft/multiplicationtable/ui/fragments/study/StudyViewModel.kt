@@ -51,8 +51,8 @@ class StudyViewModel @Inject constructor(
     }
 
     fun setNumberToStudy(number: Int) {
-        playStudyByNumUseCase.execute(number)
-        studyList = getStudyListUseCase.execute(number)
+        playStudyByNumUseCase(number)
+        studyList = getStudyListUseCase(number)
     }
 
     fun setProcessStatus(studyProcessMessage: Int) {
@@ -73,14 +73,14 @@ class StudyViewModel @Inject constructor(
         if (studyJob != null) return
         studyJob = viewModelScope.launch {
             _studyTaskStateFlow.emit(STUDY_PROCESS_START)
-            playRepeatUseCase.execute()
+            playRepeatUseCase()
             delay((StudyTime.DELAY_FOR_START_MS).toLong())
             val startTaskNum = studyTaskList.size
             for (i in startTaskNum until studyList.size) {
                 val task = studyList[i]
                 studyTaskList.add(task)
                 _studyTaskStateFlow.emit(i)
-                playSoundUseCase.execute(task.getIdWithResult())
+                playSoundUseCase(task.getIdWithResult())
                 delay((StudyTime.DELAY_FOR_REPEAT_MS).toLong())
             }
             _studyTaskStateFlow.emit(STUDY_PROCESS_FINISH)

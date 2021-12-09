@@ -5,7 +5,6 @@ data class Task(
     val parameter2: Int,
     val result: Int,
     val signOperation: Char,
-    //var rating: TaskRating = TaskRating.NOT_STUDIED
 ) {
     fun getId(): String {
         return if (parameter1 <= parameter2) {

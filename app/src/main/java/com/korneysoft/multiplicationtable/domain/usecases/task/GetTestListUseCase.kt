@@ -7,7 +7,7 @@ class GetTestListUseCase @Inject constructor(
     private val getTaskListUseCase: GetTaskListUseCase
 ) {
 
-    fun execute(number: Int): List<Task> {
-        return getTaskListUseCase.execute(number).shuffled()
+    operator fun invoke(number: Int): List<Task> {
+        return getTaskListUseCase(number).shuffled()
     }
 }

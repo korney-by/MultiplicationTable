@@ -1,20 +1,10 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
-enum class TaskRating  {
-    NOT_STUDIED,
-    POORLY_STUDIED,
-    MIDDLE_STUDIED,
-    GOOD_STUDIED;
-
-    private val value: Int
-        get() {
-            return when (this) {
-                NOT_STUDIED -> 0
-                POORLY_STUDIED -> 10
-                MIDDLE_STUDIED -> 20
-                GOOD_STUDIED -> 30
-            }
-        }
+enum class TaskRating(val value: Int)  {
+    NOT_STUDIED(10),
+    POORLY_STUDIED(20),
+    MIDDLE_STUDIED(30),
+    GOOD_STUDIED(40);
 
     companion object {
         fun getRatingFromResponseTime(responseTimeInMs: Long): TaskRating {

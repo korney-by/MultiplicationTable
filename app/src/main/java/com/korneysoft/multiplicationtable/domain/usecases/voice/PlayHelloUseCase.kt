@@ -5,7 +5,7 @@ import com.korneysoft.multiplicationtable.ui.player.PlayerHandler
 import javax.inject.Inject
 
 class PlayHelloUseCase @Inject constructor(private val soundRepository: SoundRepository) {
-    fun execute() {
+    operator fun invoke() {
         val fileDescriptor =
             soundRepository.getSoundFileDescriptor(soundRepository.helloSoundFileId)
         fileDescriptor?.let {

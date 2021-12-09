@@ -3,12 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:thickness="0dp"
     android:shape="rectangle">
-    <stroke android:width="3dp"
+    <stroke android:width="0.1mm"
         android:color="#4799E8"/>
-    <corners android:radius="5dp" />
     <gradient
-        android:startColor="#FFFF99"
-        android:endColor="#FFFFFF"
-        android:type="linear"
-        android:angle="270"/>
+        android:angle="270"
+        android:endColor="#FFFF99"
+        android:gradientRadius="40dp"
+        android:startColor="#FFFFFF"
+        android:type="radial" />
+<!--    <gradient-->
+<!--        android:startColor="#FFFF99"-->
+<!--        android:endColor="#FFFFFF"-->
+<!--        android:type="linear"-->
+<!--        android:angle="270"/>-->
 </shape>

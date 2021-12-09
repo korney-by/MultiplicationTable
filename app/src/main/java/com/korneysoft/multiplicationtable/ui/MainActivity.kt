@@ -9,7 +9,7 @@ import com.korneysoft.multiplicationtable.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(){
+class MainActivity: AppCompatActivity(){
 
     private val navController: NavController by lazy {
         val navHost =

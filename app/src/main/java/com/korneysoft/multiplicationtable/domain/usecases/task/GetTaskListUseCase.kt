@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetTaskListUseCase @Inject constructor(
     private val taskList: TaskList
 ) {
-    fun execute(number: Int): List<Task> {
+    operator fun invoke(number: Int): List<Task> {
         return if (number == StudyNumber.ALL_TABLE) {
             taskList.getStudyAllUniqueTasks()
         } else {

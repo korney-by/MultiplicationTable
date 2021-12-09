@@ -14,9 +14,7 @@ class StatisticViewModel @Inject constructor(
     private val getStatisticListUseCase: GetStatisticListUseCase
 ) : ViewModel() {
 
-    val columnCount: Int = getFinishNumberUseCase() - getStartNumberUseCase()
-    val stringCount: Int = columnCount
-
+    val columnCount: Int get() = getFinishNumberUseCase() - getStartNumberUseCase() + 1
     val statisticList = getStatisticListUseCase()
 
 

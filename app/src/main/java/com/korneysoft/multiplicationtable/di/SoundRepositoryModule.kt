@@ -1,7 +1,7 @@
 package com.korneysoft.multiplicationtable.di
 
 import com.korneysoft.multiplicationtable.domain.data.SoundRepository
-import com.korneysoft.multiplicationtable.domain.data.SoundRepositoryAssets
+import com.korneysoft.multiplicationtable.domain.data.implementation.SoundRepositoryAssets
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

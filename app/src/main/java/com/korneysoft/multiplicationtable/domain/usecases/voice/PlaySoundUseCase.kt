@@ -8,7 +8,7 @@ class PlaySoundUseCase @Inject constructor(private val soundRepository: SoundRep
     var duration = 0L
         private set
 
-    fun execute(taskId: String) {
+    operator fun invoke(taskId: String) {
         val fileDescriptor = soundRepository.getSoundFileDescriptor(taskId)
         fileDescriptor?.let {
             PlayerHandler.play(fileDescriptor, soundRepository.voiceSpeed)

@@ -4,7 +4,7 @@ import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import javax.inject.Inject
 
 class GetVoiceSpeedMaxUseCase  @Inject constructor(private val soundRepository: SoundRepository){
-    fun execute():Int {
+    operator fun invoke():Int {
         return soundRepository.VOICE_SPEED_MAX
     }
 }

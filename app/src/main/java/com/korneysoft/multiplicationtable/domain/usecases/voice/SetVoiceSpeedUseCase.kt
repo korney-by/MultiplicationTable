@@ -4,7 +4,7 @@ import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import javax.inject.Inject
 
 class SetVoiceSpeedUseCase  @Inject constructor(private val soundRepository: SoundRepository){
-    fun execute(voiceSpeed: Int) {
+    operator fun invoke(voiceSpeed: Int) {
         return soundRepository.setVoiceSpeed(voiceSpeed)
     }
 }
