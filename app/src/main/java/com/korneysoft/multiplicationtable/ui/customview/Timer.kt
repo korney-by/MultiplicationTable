@@ -1,12 +1,12 @@
 package com.korneysoft.multiplicationtable.ui.customview
 
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
+import android.graphics.RectF
 import android.os.Build
 import android.util.AttributeSet
 import android.view.View
@@ -15,8 +15,6 @@ import com.korneysoft.multiplicationtable.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-import android.graphics.RectF
-
 
 class Timer @JvmOverloads constructor(
     context: Context,
@@ -99,12 +97,18 @@ class Timer @JvmOverloads constructor(
         canvas.drawCircle(center.x, center.y, r / 25, paint)
     }
 
-
     private fun universalDrawArc(
-        canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, startAngle: Float,
-        sweepAngle: Float, useCenter: Boolean, paint: Paint
+        canvas: Canvas,
+        left: Float,
+        top: Float,
+        right: Float,
+        bottom: Float,
+        startAngle: Float,
+        sweepAngle: Float,
+        useCenter: Boolean,
+        paint: Paint
     ) {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             canvas.drawArc(
                 left, top, right, bottom, startAngle, sweepAngle, useCenter, paint
             )
@@ -139,4 +143,3 @@ class Timer @JvmOverloads constructor(
         private const val FILL = 0
     }
 }
-

@@ -6,8 +6,6 @@ import com.korneysoft.multiplicationtable.domain.usecases.voice.LoadVoicePrefere
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
-private const val TAG = "T7-MainApplication"
-
 @HiltAndroidApp
 class MainApplication : Application() {
     @Inject
@@ -19,6 +17,5 @@ class MainApplication : Application() {
         super.onCreate()
         loadVoicePreferencesUseCase()
         loadStatisticUseCase()
-        //Log.d(TAG, "appPreferences.load() - $appPreferences")
     }
 }

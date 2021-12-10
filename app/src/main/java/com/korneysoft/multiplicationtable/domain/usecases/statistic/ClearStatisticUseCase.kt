@@ -6,12 +6,12 @@ import javax.inject.Inject
 class ClearStatisticUseCase @Inject constructor(
     private val loadStatisticUseCase: LoadStatisticUseCase,
     private val saveStatisticUseCase: SaveStatisticUseCase,
-    private val getStatisticListUseCase:GetStatisticListUseCase
+    private val getStatisticListUseCase: GetStatisticListUseCase
 ) {
-    operator fun invoke(){
+    operator fun invoke() {
         val statisticList = getStatisticListUseCase()
-        statisticList.forEach{
-            it.rating= TaskRating.NOT_STUDIED
+        statisticList.forEach {
+            it.rating = TaskRating.NOT_STUDIED
         }
         loadStatisticUseCase(statisticList)
         saveStatisticUseCase(statisticList)

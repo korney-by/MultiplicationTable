@@ -2,13 +2,13 @@ package com.korneysoft.multiplicationtable.ui.fragments.study
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.korneysoft.multiplicationtable.ui.utils.ProcessState
-import com.korneysoft.multiplicationtable.ui.utils.StudyTime
 import com.korneysoft.multiplicationtable.domain.entities.Task
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetStudyListUseCase
-import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayStudyByNumUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRepeatUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayStudyByNumUseCase
+import com.korneysoft.multiplicationtable.ui.utils.ProcessState
+import com.korneysoft.multiplicationtable.ui.utils.StudyTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -16,8 +16,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val TAG = "T7-StudyViewModel"
 
 @HiltViewModel
 class StudyViewModel @Inject constructor(
@@ -89,7 +87,7 @@ class StudyViewModel @Inject constructor(
     }
 
     companion object {
-         const val STUDY_PROCESS_START = Int.MIN_VALUE
+        const val STUDY_PROCESS_START = Int.MIN_VALUE
         const val STUDY_PROCESS_STOP = Int.MAX_VALUE - 1
         const val STUDY_PROCESS_FINISH = Int.MAX_VALUE
     }

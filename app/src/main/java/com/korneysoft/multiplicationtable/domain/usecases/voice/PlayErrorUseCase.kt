@@ -4,7 +4,6 @@ import com.korneysoft.multiplicationtable.domain.data.SoundRepository
 import com.korneysoft.multiplicationtable.ui.player.PlayerHandler
 import javax.inject.Inject
 
-
 class PlayErrorUseCase @Inject constructor(private val soundRepository: SoundRepository) {
     operator fun invoke() {
         val fileDescriptor =

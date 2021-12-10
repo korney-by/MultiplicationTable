@@ -9,7 +9,6 @@ import com.korneysoft.multiplicationtable.domain.entities.Task
 
 class StudyTaskListAdapter : ListAdapter<Task, StudyTaskViewHolder>(itemComparator) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudyTaskViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = StudyItemBinding.inflate(layoutInflater, parent, false)

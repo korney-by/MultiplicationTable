@@ -2,14 +2,19 @@ package com.korneysoft.multiplicationtable.ui.fragments.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.korneysoft.multiplicationtable.domain.usecases.voice.*
+import com.korneysoft.multiplicationtable.domain.usecases.voice.GetVoiceSpeedMaxUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.GetVoiceSpeedMinUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.GetVoiceSpeedUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.GetVoiceUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.GetVoicesUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayTestSoundUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.SetVoiceSpeedUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.SetVoiceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val TAG = "T7-SettingsViewModel"
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -24,10 +29,9 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val voices: List<String> get() = getVoicesUseCase()
-    //val defaultVoice get() = getDefaultVoiceUseCase()
     val voice get() = getVoiceUseCase()
-    val VOICE_SPEED_MAX get() = getVoiceSpeedMaxUseCase()
-    val VOICE_SPEED_MIN get() = getVoiceSpeedMinUseCase()
+    val voiceSpeedMax get() = getVoiceSpeedMaxUseCase()
+    val voiceSpeedMin get() = getVoiceSpeedMinUseCase()
 
     private val _voiceSpeedStateFlow = MutableStateFlow<Int>(getVoiceSpeedUseCase())
     val voiceSpeedStateFlow = _voiceSpeedStateFlow.asStateFlow()
@@ -49,8 +53,7 @@ class SettingsViewModel @Inject constructor(
         lunchEmitVoiceSpeedStateFlow()
     }
 
-    fun playTestSound() {
+    private fun playTestSound() {
         playTestSoundUseCase()
     }
-
 }

@@ -13,7 +13,6 @@ import com.korneysoft.multiplicationtable.domain.usecases.statistic.TaskWithRati
 class StatisticTableAdapter :
     ListAdapter<TaskWithRating, StatisticTableAdapter.StatisticTableHolder>(itemComparator) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticTableHolder {
         return StatisticTableHolder(
             StatisticItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,11 +25,11 @@ class StatisticTableAdapter :
     }
 
     inner class StatisticTableHolder(
-        private val binding: StatisticItemBinding,
+        private val binding: StatisticItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskWithRating: TaskWithRating) {
-            var backgroundId: Int = 0
+            var backgroundId: Int
 
             if (taskWithRating.id.isEmpty()) {
                 backgroundId = R.drawable.cell_of_table_blue
@@ -66,8 +65,6 @@ class StatisticTableAdapter :
             ): Boolean {
                 return oldItem.equals(newItem)
             }
-
-
         }
     }
 }

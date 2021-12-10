@@ -4,7 +4,6 @@ import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.os.Build
-import android.util.Log
 
 object PlayerHandler {
 
@@ -35,11 +34,9 @@ object PlayerHandler {
             mediaPlayer.start()
 
             mediaPlayer.setOnCompletionListener {
-                duration=0
+                duration = 0
             }
         } catch (ex: Exception) {
-            //Toast.makeText(context, ex.message, Toast.LENGTH_LONG).show()
-            Log.d("T7-Player", "${ex.message}")
         }
     }
 

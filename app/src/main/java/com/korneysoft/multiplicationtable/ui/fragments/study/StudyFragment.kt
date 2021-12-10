@@ -16,7 +16,6 @@ import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
 import com.korneysoft.multiplicationtable.ui.utils.ProcessState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

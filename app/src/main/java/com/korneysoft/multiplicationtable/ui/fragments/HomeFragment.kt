@@ -9,8 +9,6 @@ import com.korneysoft.multiplicationtable.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
 
-private const val TAG = "T7-HomeFragment"
-
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -28,18 +26,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             openSelect(false)
         }
         binding.buttonProgress.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToStatisticFragment())
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToStatisticFragment()
+            )
         }
         binding.buttonSettings.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+            )
         }
 
         binding.buttonExit.setOnClickListener {
             exitProcess(-1)
         }
-
     }
-
 
     private fun openSelect(isStudyMode: Boolean) {
         val titleSelectFragment = getString(

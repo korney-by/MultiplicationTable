@@ -12,7 +12,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
 class AppPreferences @Inject constructor(
     @ApplicationContext val context: Context,
@@ -31,7 +30,7 @@ class AppPreferences @Inject constructor(
 
         val voiceSpeed = preferences.getInt(
             context.getString(R.string.key_voice_speed),
-            soundRepository.VOICE_SPEED_DEFAULT
+            soundRepository.voiceSpeedDefault
         )
         soundRepository.setVoiceSpeed(voiceSpeed)
     }
@@ -66,5 +65,4 @@ class AppPreferences @Inject constructor(
         }
         return editor.commit()
     }
-
 }

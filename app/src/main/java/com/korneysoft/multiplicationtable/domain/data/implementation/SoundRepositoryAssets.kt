@@ -8,27 +8,25 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val TAG = "T7-SoundReposAssets"
-
 @Singleton
 class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appContext: Context) :
     SoundRepository {
 
-    override val NONE = Companion.NONE
+    override val none = NONE
     override val testSoundFileId: String = SOUND_TEST
     override val defaultVoice: String
     override val voiceName: String get() = currentVoiceFolder
     override val voiceSpeed: Int get() = currentVoiceSpeed
-    override val VOICE_SPEED_DEFAULT: Int = DEFAULT_VOICE_SPEED
-    override val VOICE_SPEED_MIN = MIN_VOICE_SPEED
-    override val VOICE_SPEED_MAX = MAX_VOICE_SPEED
+    override val voiceSpeedDefault: Int = DEFAULT_VOICE_SPEED
+    override val voiceSpeedMin = MIN_VOICE_SPEED
+    override val voiceSpeedMax = MAX_VOICE_SPEED
     override val voices: List<String>
-    override val repeatSoundFileId: String= SOUND_REPEAT
-    override val helloSoundFileId: String= SOUND_HELLO
-    override val rightSoundFileId: String= SOUND_RIGHT
-    override val errorSoundFileId: String= SOUND_ERROR
+    override val repeatSoundFileId: String = SOUND_REPEAT
+    override val helloSoundFileId: String = SOUND_HELLO
+    override val rightSoundFileId: String = SOUND_RIGHT
+    override val errorSoundFileId: String = SOUND_ERROR
 
-    private var currentVoiceFolder: String = NONE
+    private var currentVoiceFolder: String = none
     private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
 
     init {
@@ -37,8 +35,8 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         setVoice(defaultVoice)
     }
 
-    override fun getStudyBySoundFileId(number:Int): String {
-        return SOUND_LEARN_BY+number
+    override fun getStudyBySoundFileId(number: Int): String {
+        return SOUND_LEARN_BY + number
     }
 
     private fun readVoices(): List<String> {
@@ -56,7 +54,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
 
     override fun getSoundFileDescriptor(taskId: String): AssetFileDescriptor? {
         val fileName = getSoundFileName(taskId)
-        if (fileName == NONE) return null
+        if (fileName == none) return null
 
         return try {
             appContext.assets.openFd("$SOUNDS_FOLDER/$fileName")
@@ -76,8 +74,8 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     }
 
     private fun getSoundFileName(taskId: String): String {
-        if (currentVoiceFolder == NONE) {
-            return NONE
+        if (currentVoiceFolder == none) {
+            return none
         }
         return "$currentVoiceFolder/${taskId + SOUND_FILE_TYPE}"
     }

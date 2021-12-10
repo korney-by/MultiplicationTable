@@ -10,5 +10,4 @@ data class TaskWithRating(
     var rating: TaskRating
 ) {
     override fun toString() = result.toString()
-
 }

@@ -48,7 +48,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.voiceSpeedStateFlow.collect {
-                    //Log.d(TAG, "voiceSpeedStateFlow.collect")
                     voiceSpeedSeekBar?.value = it
                     setTitleVoiceSpeed(it)
                 }
@@ -73,11 +72,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-
     private fun setSeekBarSettings() {
         voiceSpeedSeekBar?.apply {
-            min = viewModel.VOICE_SPEED_MIN
-            max = viewModel.VOICE_SPEED_MAX
+            min = viewModel.voiceSpeedMin
+            max = viewModel.voiceSpeedMax
             setOnPreferenceChangeListener { preference, newValue ->
                 viewModel.setVoiceSpeed(newValue as Int)
                 true

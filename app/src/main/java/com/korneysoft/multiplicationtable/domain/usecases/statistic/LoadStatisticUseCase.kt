@@ -9,10 +9,9 @@ class LoadStatisticUseCase @Inject constructor(
     private val appPreferences: AppPreferences
 ) {
     operator fun invoke(inputStatisticList: List<TaskWithRating>? = null) {
-        val statisticList= inputStatisticList ?: appPreferences.readStatistic()
-        statisticList.forEach{
-            ratingRepository.setRating(it.id,it.rating)
+        val statisticList = inputStatisticList ?: appPreferences.readStatistic()
+        statisticList.forEach {
+            ratingRepository.setRating(it.id, it.rating)
         }
-
     }
 }

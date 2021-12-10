@@ -2,7 +2,6 @@ package com.korneysoft.multiplicationtable.domain.usecases.statistic
 
 import com.korneysoft.multiplicationtable.domain.data.RatingRepository
 import com.korneysoft.multiplicationtable.domain.data.TaskList
-import com.korneysoft.multiplicationtable.domain.entities.Task
 import javax.inject.Inject
 
 class GetStatisticListUseCase @Inject constructor(

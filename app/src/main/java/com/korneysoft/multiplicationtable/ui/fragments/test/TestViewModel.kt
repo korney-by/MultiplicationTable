@@ -3,7 +3,8 @@ package com.korneysoft.multiplicationtable.ui.fragments.test
 import android.os.SystemClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.korneysoft.multiplicationtable.domain.entities.*
+import com.korneysoft.multiplicationtable.domain.entities.ResponseTime
+import com.korneysoft.multiplicationtable.domain.entities.Task
 import com.korneysoft.multiplicationtable.domain.usecases.rating.SetBetterRatingUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.statistic.SaveStatisticUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetTestListUseCase
@@ -51,9 +52,7 @@ class TestViewModel @Inject constructor(
     private var _taskStateStateFlow = MutableStateFlow<ProcessState>(ProcessState.NOT_STARTED)
     val taskStateStateFlow = _taskStateStateFlow.asStateFlow()
 
-
     fun setNumberToTest(number: Int) {
-        //playTestByNumUseCase(number)
         testList = getTestListUseCase(number).shuffled()
     }
 
@@ -103,7 +102,6 @@ class TestViewModel @Inject constructor(
             val startTaskNum = currentTestTaskInd + 1
             _commandFlow.emit(Command.getCommandPair(Command.PROCESS_START))
             if (startTaskNum == 0) {
-                //playAnswerUseCase()
                 delay(TestTime.DELAY_FOR_START_MS)
             }
             for (i in startTaskNum..testList.size - 1) {
@@ -143,10 +141,9 @@ class TestViewModel @Inject constructor(
         _commandFlow.emit(Command.getCommandPair(Command.TASK_FINISH))
     }
 
-    fun playSoundError(){
+    fun playSoundError() {
         playErrorUseCase()
     }
-
 
     fun getLeftTime(startTimeMs: Long, leftTimeMs: Long): Long {
         return leftTimeMs - (getCurrentTime() - startTimeMs)
@@ -156,7 +153,7 @@ class TestViewModel @Inject constructor(
         return SystemClock.elapsedRealtime()
     }
 
-    fun saveStatistic(){
+    fun saveStatistic() {
         viewModelScope.launch {
             saveStatisticUseCase()
         }

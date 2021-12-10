@@ -4,7 +4,7 @@ data class Task(
     val parameter1: Int,
     val parameter2: Int,
     val result: Int,
-    val signOperation: Char,
+    val signOperation: Char
 ) {
     fun getId(): String {
         return if (parameter1 <= parameter2) {
@@ -20,15 +20,13 @@ data class Task(
 
     override fun toString(): String {
         return if (parameter1 <= parameter2) {
-            "${parameter1} • $parameter2 ="
+            "$parameter1 • $parameter2 ="
         } else {
-            "${parameter2} • $parameter1 ="
+            "$parameter2 • $parameter1 ="
         }
     }
 
     fun toStringWithResult(): String {
         return toString() + " $result"
     }
-
-
 }

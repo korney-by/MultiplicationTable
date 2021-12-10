@@ -1,6 +1,6 @@
 package com.korneysoft.multiplicationtable.domain.entities
 
-enum class TaskRating(val value: Int)  {
+enum class TaskRating(val value: Int) {
     NOT_STUDIED(10),
     POORLY_STUDIED(20),
     MIDDLE_STUDIED(30),

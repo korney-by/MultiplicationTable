@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TaskListImpl @Inject constructor(): TaskList {
+class TaskListImpl @Inject constructor() : TaskList {
     override val START_NUMBER = _START_NUMBER
     override val FINISH_NUMBER = _FINISH_NUMBER
 
