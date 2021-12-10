@@ -33,7 +33,7 @@ class SettingsViewModel @Inject constructor(
     val voiceSpeedMax get() = getVoiceSpeedMaxUseCase()
     val voiceSpeedMin get() = getVoiceSpeedMinUseCase()
 
-    private val _voiceSpeedStateFlow = MutableStateFlow<Int>(getVoiceSpeedUseCase())
+    private val _voiceSpeedStateFlow = MutableStateFlow(getVoiceSpeedUseCase())
     val voiceSpeedStateFlow = _voiceSpeedStateFlow.asStateFlow()
 
     private fun lunchEmitVoiceSpeedStateFlow() {

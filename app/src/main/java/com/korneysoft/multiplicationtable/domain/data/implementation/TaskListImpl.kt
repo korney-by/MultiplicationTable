@@ -1,13 +1,14 @@
-package com.korneysoft.multiplicationtable.domain.entities
+package com.korneysoft.multiplicationtable.domain.data.implementation
 
 import com.korneysoft.multiplicationtable.domain.data.TaskList
+import com.korneysoft.multiplicationtable.domain.entities.Task
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TaskListImpl @Inject constructor() : TaskList {
-    override val START_NUMBER = _START_NUMBER
-    override val FINISH_NUMBER = _FINISH_NUMBER
+    override val startNumber = START_NUMBER
+    override val finishNumber = FINISH_NUMBER
 
     private val _tasks = mutableListOf<Task>()
     override val tasks: List<Task> = _tasks
@@ -17,8 +18,8 @@ class TaskListImpl @Inject constructor() : TaskList {
     }
 
     private fun buildTasks() {
-        for (i in START_NUMBER..FINISH_NUMBER) {
-            for (j in START_NUMBER..FINISH_NUMBER) {
+        for (i in startNumber..finishNumber) {
+            for (j in startNumber..finishNumber) {
                 val task = Task(i, j, i * j, SIGN_MULTIPLICATION)
                 _tasks.add(task)
             }
@@ -46,8 +47,8 @@ class TaskListImpl @Inject constructor() : TaskList {
     }
 
     companion object {
-        private const val _START_NUMBER = 2
-        private const val _FINISH_NUMBER = 9
+        private const val START_NUMBER = 2
+        private const val FINISH_NUMBER = 9
         private const val SIGN_MULTIPLICATION = 'x'
     }
 }

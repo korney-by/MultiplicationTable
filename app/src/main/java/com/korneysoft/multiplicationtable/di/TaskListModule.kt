@@ -1,7 +1,7 @@
 package com.korneysoft.multiplicationtable.di
 
 import com.korneysoft.multiplicationtable.domain.data.TaskList
-import com.korneysoft.multiplicationtable.domain.entities.TaskListImpl
+import com.korneysoft.multiplicationtable.domain.data.implementation.TaskListImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

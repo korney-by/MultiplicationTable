@@ -29,7 +29,7 @@ class StatisticTableAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskWithRating: TaskWithRating) {
-            var backgroundId: Int
+            val backgroundId: Int
 
             if (taskWithRating.id.isEmpty()) {
                 backgroundId = R.drawable.cell_of_table_blue
@@ -63,7 +63,7 @@ class StatisticTableAdapter :
                 oldItem: TaskWithRating,
                 newItem: TaskWithRating
             ): Boolean {
-                return oldItem.equals(newItem)
+                return oldItem == newItem
             }
         }
     }

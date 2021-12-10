@@ -16,8 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-private const val TAG = "T7-SettingsFragment"
-
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
     private val viewModel by viewModels<SettingsViewModel>()

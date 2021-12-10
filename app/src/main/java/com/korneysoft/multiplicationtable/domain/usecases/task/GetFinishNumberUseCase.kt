@@ -7,6 +7,6 @@ class GetFinishNumberUseCase @Inject constructor(
     private val taskList: TaskList
 ) {
     operator fun invoke(): Int {
-        return taskList.FINISH_NUMBER
+        return taskList.finishNumber
     }
 }

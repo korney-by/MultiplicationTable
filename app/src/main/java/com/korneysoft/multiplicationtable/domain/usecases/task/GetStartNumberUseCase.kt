@@ -7,6 +7,6 @@ class GetStartNumberUseCase @Inject constructor(
     private val taskList: TaskList
 ) {
     operator fun invoke(): Int {
-        return taskList.START_NUMBER
+        return taskList.startNumber
     }
 }

@@ -43,11 +43,6 @@ class StudyViewModel @Inject constructor(
         }
     }
 
-    fun restartStudyProcess() {
-        stopStudyProcess()
-        startStudyProcess()
-    }
-
     fun setNumberToStudy(number: Int) {
         playStudyByNumUseCase(number)
         studyList = getStudyListUseCase(number)

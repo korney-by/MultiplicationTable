@@ -23,11 +23,11 @@ class StudyTaskListAdapter : ListAdapter<Task, StudyTaskViewHolder>(itemComparat
         private val itemComparator = object : DiffUtil.ItemCallback<Task>() {
 
             override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-                return oldItem.equals(newItem)
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-                return oldItem.equals(newItem)
+                return oldItem == newItem
             }
         }
     }

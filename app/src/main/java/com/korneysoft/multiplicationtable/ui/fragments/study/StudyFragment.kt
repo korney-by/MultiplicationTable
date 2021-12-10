@@ -75,10 +75,10 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
     }
 
     private fun setVisibleButtons() {
-        val isNotRunned = (viewModel.studyProcessState == ProcessState.NOT_STARTED)
-        binding.buttonStart.isVisible = isNotRunned
-        binding.buttonStopRepeat.isVisible = !isNotRunned
-        binding.textInstruction.isVisible = !isNotRunned
+        val isNotRunning = (viewModel.studyProcessState == ProcessState.NOT_STARTED)
+        binding.buttonStart.isVisible = isNotRunning
+        binding.buttonStopRepeat.isVisible = !isNotRunning
+        binding.textInstruction.isVisible = !isNotRunning
 
         when (viewModel.studyProcessState) {
             ProcessState.STARTED -> {
