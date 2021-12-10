@@ -37,11 +37,11 @@
 
         <Button
             android:id="@+id/button_clear_statistic"
-            style="@style/ButtonStyleByNum"
+            style="@style/ButtonStyleWithoutHeight"
             android:layout_width="wrap_content"
-            android:maxHeight="50dp"
+            android:layout_height="70dp"
             android:backgroundTint="#f58257"
-            app:cornerRadius="20dp"
+            app:cornerRadius="10dp"
             app:strokeColor="#3F3A44"
             app:strokeWidth="3dp"
             android:text="@string/clear_statistic"

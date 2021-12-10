@@ -32,5 +32,4 @@ class StudyTaskListAdapter : ListAdapter<Task, StudyTaskViewHolder>(itemComparat
             }
         }
     }
-
 }
