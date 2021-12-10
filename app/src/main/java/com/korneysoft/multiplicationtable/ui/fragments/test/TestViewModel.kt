@@ -7,6 +7,7 @@ import com.korneysoft.multiplicationtable.domain.entities.*
 import com.korneysoft.multiplicationtable.domain.usecases.rating.SetBetterRatingUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.statistic.SaveStatisticUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.task.GetTestListUseCase
+import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayErrorUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlayRightUseCase
 import com.korneysoft.multiplicationtable.domain.usecases.voice.PlaySoundUseCase
 import com.korneysoft.multiplicationtable.ui.utils.Command
@@ -28,7 +29,8 @@ class TestViewModel @Inject constructor(
     private val playRightUseCase: PlayRightUseCase,
     private val getTestListUseCase: GetTestListUseCase,
     private val setBetterRatingUseCase: SetBetterRatingUseCase,
-    private val saveStatisticUseCase: SaveStatisticUseCase
+    private val saveStatisticUseCase: SaveStatisticUseCase,
+    private val playErrorUseCase: PlayErrorUseCase
 ) : ViewModel() {
 
     private var currentTestTaskInd: Int = -1
@@ -139,6 +141,10 @@ class TestViewModel @Inject constructor(
             delay(playSoundUseCase.duration)
         }
         _commandFlow.emit(Command.getCommandPair(Command.TASK_FINISH))
+    }
+
+    fun playSoundError(){
+        playErrorUseCase()
     }
 
 

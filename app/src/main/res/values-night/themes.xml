@@ -16,13 +16,13 @@
 
 
     <style name="Theme.MultiplicationTable.Blue" parent="Theme.MultiplicationTable">
-        <item name="android:textColorPrimary">@color/light_blue_100_light</item>
-        <item name="colorPrimary">@color/light_blue_100</item>
-        <item name="colorPrimaryDark">@color/light_blue_100_dark</item>
-        <item name="colorPrimaryVariant">@color/light_blue_100_dark</item>
-        <item name="colorSecondary">@color/light_blue_100</item>
-        <item name="colorSecondaryVariant">@color/light_blue_100_light</item>
+        <item name="android:textColorPrimary">@color/light_blue_600_light</item>
+        <item name="colorPrimary">@color/light_blue_600</item>
+        <item name="colorPrimaryDark">@color/light_blue_600_dark</item>
+        <item name="colorPrimaryVariant">@color/light_blue_600_dark</item>
+        <item name="colorSecondary">@color/light_blue_600</item>
+        <item name="colorSecondaryVariant">@color/light_blue_600_light</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/light_blue_100_dark</item>
+        <item name="android:statusBarColor">@color/light_blue_600_dark</item>
     </style>
 </resources>

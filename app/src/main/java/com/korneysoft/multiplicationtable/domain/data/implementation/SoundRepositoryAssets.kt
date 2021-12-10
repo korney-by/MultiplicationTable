@@ -26,6 +26,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
     override val repeatSoundFileId: String= SOUND_REPEAT
     override val helloSoundFileId: String= SOUND_HELLO
     override val rightSoundFileId: String= SOUND_RIGHT
+    override val errorSoundFileId: String= SOUND_ERROR
 
     private var currentVoiceFolder: String = NONE
     private var currentVoiceSpeed: Int = DEFAULT_VOICE_SPEED
@@ -93,6 +94,7 @@ class SoundRepositoryAssets @Inject constructor(@ApplicationContext val appConte
         private const val SOUND_HELLO = "hello"
         private const val SOUND_RIGHT = "right"
         private const val SOUND_LEARN_BY = "by"
+        private const val SOUND_ERROR = "no"
         private const val NONE = ""
     }
 }

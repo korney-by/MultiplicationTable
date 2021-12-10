@@ -68,6 +68,7 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
         binding.buttonOk.setOnClickListener {
             viewModel.setAnswer(binding.editTextAnswer.text.toString().toIntOrNull())
             if (!viewModel.isAnswerRight()) {
+                viewModel.playSoundError()
                 binding.editTextAnswer.selectAll()
             }
         }
