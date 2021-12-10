@@ -1,55 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.HomeFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+    <Button
+        android:id="@+id/button_study"
+        style="@style/ButtonMainMenuStyle"
+        app:icon="@drawable/ic_school_outline"
+        app:iconGravity="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_study"
+        app:layout_constraintBottom_toTopOf="@+id/button_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button_study"
-            style="@style/ButtonStyle"
+    <Button
+        android:id="@+id/button_check"
+        style="@style/ButtonMainMenuStyle"
+        app:icon="@drawable/ic_baseline_check_24"
+        app:iconGravity="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_check"
+        app:layout_constraintBottom_toTopOf="@+id/button_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_study" />
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_study" />
+    <Button
+        android:id="@+id/button_progress"
+        style="@style/ButtonMainMenuStyle"
+        app:icon="@drawable/ic_trophy_outline"
+        app:iconGravity="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_progress"
+        app:layout_constraintBottom_toTopOf="@+id/button_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_check" />
 
-        <Button
-            android:id="@+id/button_check"
-            style="@style/ButtonStyle"
+    <Button
+        android:id="@+id/button_settings"
+        style="@style/ButtonMainMenuStyle"
+        app:icon="@drawable/ic_baseline_settings_24"
+        app:iconGravity="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_settings"
+        app:layout_constraintBottom_toTopOf="@+id/button_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_check" />
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_check" />
+    <Button
+        android:id="@+id/button_exit"
+        app:icon="@drawable/ic_baseline_close_24"
+        app:iconGravity="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="@string/exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_settings" />
 
-        <Button
-            android:id="@+id/button_progress"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_progress" />
 
-        <Button
-            android:id="@+id/button_settings"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/button_settings" />
-
-        <Button
-            android:id="@+id/button_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/exit" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,7 +47,10 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
         observeTaskState()
         observeTimer()
         observeProcessState()
-        viewModel.startTestProcess()
+
+        if (savedInstanceState == null) {
+            viewModel.startTestProcess()
+        }
     }
 
     override fun onResume() {

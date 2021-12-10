@@ -76,7 +76,7 @@ class Timer @JvmOverloads constructor(
         )
 
         // draw arrow
-        paint.color = Color.DKGRAY
+        paint.color = Color.GRAY
         val r = halfHeight.toFloat()
 
         val arrowAngel = (2 * percentAngel - (0.5).toFloat()) * PI.toFloat()

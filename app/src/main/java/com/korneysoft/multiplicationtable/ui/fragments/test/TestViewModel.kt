@@ -121,7 +121,6 @@ class TestViewModel @Inject constructor(
 
         currAnswer = null
         playSoundUseCase(task.getId())
-        //delay(playSoundUseCase.duration)
         val startTimeMs = getCurrentTime()
 
         while (leftTime > 0 && !isAnswerRight(task)) {

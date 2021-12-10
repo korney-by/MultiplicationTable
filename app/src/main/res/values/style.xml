@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonStyle">
+        <item name="android:minHeight">60dp</item>
+    </style>
+
+    <style name="ButtonMainMenuStyle">
+        <item name="android:minHeight">60dp</item>
+        <item name="android:minWidth">270dp</item>
+    </style>
+
+    <style name="ButtonStyleWithoutHeight" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">110dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="ButtonStyleByNum" parent="ButtonStyleWithoutHeight">
+        <item name="android:layout_height">90dp</item>
+    </style>
+
+
+
+</resources>

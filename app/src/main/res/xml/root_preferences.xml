@@ -13,10 +13,12 @@
         <androidx.preference.ListPreference
             app:key="@string/key_voice"
             app:title="@string/voice_title"
+            android:icon="@drawable/ic_baseline_record_voice_over_24"
             app:useSimpleSummaryProvider="true" />
 
         <SeekBarPreference
             app:key="@string/key_voice_speed"
+            android:icon="@drawable/ic_baseline_speed_24"
             app:title="@string/speaking_speed" />
 
 
