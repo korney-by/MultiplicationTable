@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
+import com.korneysoft.multiplicationtable.ui.utils.Command
 import com.korneysoft.multiplicationtable.ui.utils.ProcessState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -27,12 +28,11 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
     private val args: StudyFragmentArgs by navArgs()
     private val recyclerViewAdapter = StudyTaskListAdapter()
     private val studyTaskList by lazy { viewModel.studyTaskList }
+    private var currentProcessState: ProcessState = ProcessState.NOT_STARTED
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStudyBinding.bind(view)
-
-        setVisibleButtons()
 
         binding.buttonExit.setOnClickListener {
             findNavController().popBackStack()
@@ -55,12 +55,13 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
 
         binding.textAction.text = args.subTitleFragment
 
-        updateRecyclerView()
-        launchCollectTask()
+        observeCommands()
+        observeProcessState()
+        observeStudyTask()
     }
 
     private fun actionButtonStopRepeat() {
-        when (viewModel.studyProcessState) {
+        when (currentProcessState) {
             ProcessState.STARTED -> {
                 viewModel.stopStudyProcess()
             }
@@ -74,13 +75,13 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
         }
     }
 
-    private fun setVisibleButtons() {
-        val isNotRunning = (viewModel.studyProcessState == ProcessState.NOT_STARTED)
+    private fun setVisibleButtons(state: ProcessState) {
+        val isNotRunning = (state == ProcessState.NOT_STARTED)
         binding.buttonStart.isVisible = isNotRunning
         binding.buttonStopRepeat.isVisible = !isNotRunning
         binding.textInstruction.isVisible = !isNotRunning
 
-        when (viewModel.studyProcessState) {
+        when (state) {
             ProcessState.STARTED -> {
                 binding.buttonStopRepeat.text = getString(R.string.stop)
             }
@@ -94,25 +95,21 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
         }
     }
 
-    private fun launchCollectTask() {
+    private fun observeCommands() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.studyTaskStateFlow.collect {
-                    when (it) {
-                        StudyViewModel.STUDY_PROCESS_START -> {
-                            viewModel.setProcessStatus(it)
-                            studyProcessWasStarted()
+                viewModel.commandFlow.collect {
+                    when (it.first) {
+                        Command.PROCESS_START -> {
+                            viewModel.setProcessState(ProcessState.STARTED)
                         }
-                        StudyViewModel.STUDY_PROCESS_STOP -> {
-                            viewModel.setProcessStatus(it)
-                            studyProcessWasStopped()
+                        Command.PROCESS_STOP -> {
+                            viewModel.setProcessState(ProcessState.STOPPED)
                         }
-                        StudyViewModel.STUDY_PROCESS_FINISH -> {
-                            viewModel.setProcessStatus(it)
-                            studyProcessWasFinished()
+                        Command.PROCESS_FINISH -> {
+                            viewModel.setProcessState(ProcessState.FINISHED)
                         }
-                        else -> { // normal process
-                            updateRecyclerView()
+                        Command.TASK_START, Command.TASK_STOP, Command.TASK_FINISH -> {
                         }
                     }
                 }
@@ -120,17 +117,26 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
         }
     }
 
-    private fun studyProcessWasStarted() {
-        setVisibleButtons()
-        updateRecyclerView()
+    private fun observeProcessState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.processStateStateFlow.collect {
+                    currentProcessState = it
+                    setVisibleButtons(it)
+                    updateRecyclerView()
+                }
+            }
+        }
     }
 
-    private fun studyProcessWasStopped() {
-        setVisibleButtons()
-    }
-
-    private fun studyProcessWasFinished() {
-        setVisibleButtons()
+    private fun observeStudyTask() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.studyTaskStateFlow.collect { time ->
+                    updateRecyclerView()
+                }
+            }
+        }
     }
 
     private fun updateRecyclerView() {
