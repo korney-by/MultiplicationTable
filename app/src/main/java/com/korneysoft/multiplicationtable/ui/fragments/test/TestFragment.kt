@@ -42,7 +42,7 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
         setListenersForEnter()
         binding.textAction.text = args.subTitleFragment
 
-        observeCommands()
+       // observeCommands()
         observeTaskState()
         observeTimer()
         observeProcessState()
@@ -78,36 +78,35 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
         }
     }
 
-    private fun observeCommands() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.commandFlow.collect {
-                    when (it.first) {
-                        Command.PROCESS_START -> {
-                            viewModel.setProcessState(ProcessState.STARTED)
-                        }
-                        Command.PROCESS_STOP -> {
-                            viewModel.setProcessState(ProcessState.STOPPED)
-                        }
-                        Command.PROCESS_FINISH -> {
-                            viewModel.setProcessState(ProcessState.FINISHED)
-                            findNavController().popBackStack()
-                        }
-
-                        Command.TASK_START -> {
-                            viewModel.setTaskState(ProcessState.STARTED)
-                        }
-                        Command.TASK_STOP -> {
-                            viewModel.setTaskState(ProcessState.STOPPED)
-                        }
-                        Command.TASK_FINISH -> {
-                            viewModel.setTaskState(ProcessState.FINISHED)
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    private fun observeCommands() {
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.commandFlow.collect {
+//                    when (it.first) {
+//                        Command.PROCESS_START -> {
+//                            viewModel.setProcessState(ProcessState.STARTED)
+//                        }
+//                        Command.PROCESS_STOP -> {
+//                            viewModel.setProcessState(ProcessState.STOPPED)
+//                        }
+//                        Command.PROCESS_FINISH -> {
+//                            viewModel.setProcessState(ProcessState.FINISHED)
+//                        }
+//
+//                        Command.TASK_START -> {
+//                            viewModel.setTaskState(ProcessState.STARTED)
+//                        }
+//                        Command.TASK_STOP -> {
+//                            viewModel.setTaskState(ProcessState.STOPPED)
+//                        }
+//                        Command.TASK_FINISH -> {
+//                            viewModel.setTaskState(ProcessState.FINISHED)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun observeTimer() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -140,6 +139,12 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
     }
 
     private fun showCurrentProcessState(state: ProcessState) {
+        when (state) {
+            ProcessState.FINISHED -> {
+                findNavController().popBackStack()
+            }
+            ProcessState.NOT_STARTED, ProcessState.STARTED, ProcessState.STOPPED -> {}
+        }
     }
 
     private fun showCurrentTaskState(state: ProcessState) {
@@ -158,6 +163,7 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
                 binding.editTextAnswer.text.clear()
                 binding.textTask.text = viewModel.getCurrentTask()?.toStringWithResult()
             }
+            ProcessState.NOT_STARTED -> {}
         }
     }
 
@@ -184,9 +190,10 @@ class TestFragment : Fragment(R.layout.fragment_test), LifecycleObserver {
     private fun showKeyboardNormal(textView: TextView) {
         activity?.let {
             val imm: InputMethodManager = it.applicationContext.getSystemService(
-                    Context.INPUT_METHOD_SERVICE
+                Context.INPUT_METHOD_SERVICE
             ) as InputMethodManager
             imm.showSoftInput(textView, InputMethodManager.SHOW_IMPLICIT)
         }
     }
 }
+

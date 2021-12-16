@@ -9,9 +9,9 @@ enum class Command {
     TASK_STOP,
     TASK_FINISH;
 
-    companion object {
-        fun getCommandPair(command: Command, value: Int? = null): Pair<Command, Int?> {
-            return Pair(command, value)
-        }
-    }
+//    companion object {
+//        fun getCommandPair(command: Command, value: Int? = null): Pair<Command, Int?> {
+//            return Pair(command, value)
+//        }
+//    }
 }

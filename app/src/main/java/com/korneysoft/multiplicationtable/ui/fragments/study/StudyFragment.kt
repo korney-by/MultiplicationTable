@@ -8,12 +8,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.korneysoft.multiplicationtable.R
 import com.korneysoft.multiplicationtable.databinding.FragmentStudyBinding
-import com.korneysoft.multiplicationtable.ui.utils.Command
 import com.korneysoft.multiplicationtable.ui.utils.ProcessState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -35,11 +33,13 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
         binding = FragmentStudyBinding.bind(view)
 
         binding.buttonExit.setOnClickListener {
-            findNavController().popBackStack()
+            viewModel.finishStudyProcess()
+
         }
         if (savedInstanceState == null) {
             viewModel.setNumberToStudy(args.studyByNumber)
         }
+
         binding.recyclerMemoryList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = recyclerViewAdapter
@@ -55,7 +55,6 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
 
         binding.textAction.text = args.subTitleFragment
 
-        observeCommands()
         observeProcessState()
         observeStudyTask()
     }
@@ -91,28 +90,7 @@ class StudyFragment : Fragment(R.layout.fragment_study) {
             ProcessState.FINISHED -> {
                 binding.buttonStopRepeat.text = getString(R.string.repeat)
             }
-            ProcessState.NOT_STARTED -> {}
-        }
-    }
-
-    private fun observeCommands() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.commandFlow.collect {
-                    when (it.first) {
-                        Command.PROCESS_START -> {
-                            viewModel.setProcessState(ProcessState.STARTED)
-                        }
-                        Command.PROCESS_STOP -> {
-                            viewModel.setProcessState(ProcessState.STOPPED)
-                        }
-                        Command.PROCESS_FINISH -> {
-                            viewModel.setProcessState(ProcessState.FINISHED)
-                        }
-                        Command.TASK_START, Command.TASK_STOP, Command.TASK_FINISH -> {
-                        }
-                    }
-                }
+            ProcessState.NOT_STARTED -> {
             }
         }
     }

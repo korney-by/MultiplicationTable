@@ -9,13 +9,18 @@ import javax.inject.Inject
 @HiltAndroidApp
 class MainApplication : Application() {
     @Inject
-    lateinit var loadVoicePreferencesUseCase: LoadVoicePreferencesUseCase
+    internal lateinit var loadVoicePreferencesUseCase: LoadVoicePreferencesUseCase
     @Inject
-    lateinit var loadStatisticUseCase: LoadStatisticUseCase
+    internal lateinit var loadStatisticUseCase: LoadStatisticUseCase
 
     override fun onCreate() {
         super.onCreate()
+        loadPreferences()
+    }
+
+    private fun loadPreferences() {
         loadVoicePreferencesUseCase()
         loadStatisticUseCase()
     }
+
 }

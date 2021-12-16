@@ -13,9 +13,7 @@ import com.korneysoft.multiplicationtable.ui.utils.StudyTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,9 +31,6 @@ class StudyViewModel @Inject constructor(
     private var studyList = listOf<Task>()
     private var studyJob: Job? = null
 
-    private var _commandFlow = MutableSharedFlow<Pair<Command, Int?>>()
-    val commandFlow = _commandFlow.asSharedFlow()
-
     private var _studyTaskStateFlow = MutableStateFlow<Int?>(null)
     val studyTaskStateFlow = _studyTaskStateFlow.asStateFlow()
 
@@ -46,8 +41,12 @@ class StudyViewModel @Inject constructor(
         studyJob?.cancel()
         studyJob = null
         viewModelScope.launch {
-            sendCommandToFragment(Command.PROCESS_STOP)
+            applyCommand(Command.PROCESS_STOP)
         }
+    }
+
+    fun finishStudyProcess() {
+        applyCommand(Command.PROCESS_FINISH)
     }
 
     fun setNumberToStudy(number: Int) {
@@ -67,7 +66,7 @@ class StudyViewModel @Inject constructor(
     fun continueStudyProcess() {
         if (studyJob != null) return
         studyJob = viewModelScope.launch {
-            sendCommandToFragment(Command.PROCESS_START)
+            applyCommand(Command.PROCESS_START)
             playRepeatUseCase()
             delay((StudyTime.DELAY_FOR_START_MS).toLong())
             val startTaskNum = studyTaskList.size
@@ -78,13 +77,28 @@ class StudyViewModel @Inject constructor(
                 playSoundUseCase(task.getIdWithResult())
                 delay((StudyTime.DELAY_FOR_REPEAT_MS).toLong())
             }
-            sendCommandToFragment(Command.PROCESS_FINISH)
+            applyCommand(Command.PROCESS_FINISH)
             studyJob = null
         }
     }
 
-    private suspend fun sendCommandToFragment(command: Command) {
-        _commandFlow.emit(Command.getCommandPair(command))
+    private fun applyCommand(command: Command) {
+        val newState = when (command) {
+            Command.PROCESS_START -> {
+                ProcessState.STARTED
+            }
+            Command.PROCESS_STOP -> {
+                ProcessState.STOPPED
+            }
+            Command.PROCESS_FINISH -> {
+                ProcessState.FINISHED
+            }
+            Command.TASK_START, Command.TASK_STOP, Command.TASK_FINISH -> {
+                null
+            }
+        }
+        newState?.let {
+            setProcessState(newState)
+        }
     }
-
 }
