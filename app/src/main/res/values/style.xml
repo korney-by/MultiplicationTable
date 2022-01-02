@@ -18,7 +18,7 @@
     </style>
 
     <style name="ButtonStyleByNum" parent="ButtonStyleWithoutHeight">
-        <item name="android:layout_height">90dp</item>
+        <item name="android:layout_height">85dp</item>
     </style>
 
 
